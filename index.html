@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Onigiri English - 子ども向け英語学習ポータル</title>
+    <meta name="description" content="子ども向け英語学習Webアプリ。英単語スタディ、語順パズル、英会話などの楽しいミニゲームで英語を学ぼう！" />
+    <meta property="og:title" content="Onigiri English - 子ども向け英語学習ポータル" />
+    <meta property="og:description" content="子ども向け英語学習Webアプリ。英単語スタディ、語順パズル、英会話などの楽しいミニゲームで英語を学ぼう！" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- 共通スタイルシート -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="brand-logo" aria-label="Onigiri English トップページ">
+          <div class="brand-icon" aria-hidden="true">🍙</div>
+          <div class="brand-info">
+            <span class="brand-title">Onigiri English</span>
+            <span class="brand-tagline">たのしく えいごを まなぼう！</span>
+          </div>
+        </a>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+      <div class="container">
+        <!-- ヒーロー / 案内エリア -->
+        <section class="hero-section">
+          <div class="hero-pill">
+            <span aria-hidden="true">✨</span>
+            <span>ミニゲームでレベルアップ！</span>
+          </div>
+          <h1 class="hero-title">好きなゲームを えらんであそぼう！</h1>
+          <p class="hero-subtitle">
+            おにぎりイングリッシュへようこそ！ゲームをクリアして英語マスターをめざそう！
+          </p>
+        </section>
+
+        <!-- ゲーム選択グリッド -->
+        <section class="games-section" aria-label="ゲーム選択一覧">
+          <div class="games-grid">
+            
+            <!-- ゲーム1: 英単語スタディ -->
+            <a 
+              href="games/word-match/index.html" 
+              class="game-card" 
+              data-status="coming-soon"
+              aria-label="英単語スタディ（準備中）"
+            >
+              <div class="card-header">
+                <div class="game-icon-wrapper icon-word" aria-hidden="true">
+                  🔤
+                </div>
+                <span class="status-badge coming-soon">準備中</span>
+              </div>
+              <div class="card-body">
+                <h2 class="game-title">英単語スタディ</h2>
+                <p class="game-description">英単語と日本語訳を覚えていくゲーム</p>
+              </div>
+              <div class="card-footer">
+                <span>レベル: かんたん</span>
+                <span class="play-action-text">あそぶ <span class="arrow-icon">→</span></span>
+              </div>
+            </a>
+
+            <!-- ゲーム2: 語順パズル（SVOカード） -->
+            <a 
+              href="games/svo-card/index.html" 
+              class="game-card" 
+              data-status="coming-soon"
+              aria-label="語順パズル（SVOカード）（準備中）"
+            >
+              <div class="card-header">
+                <div class="game-icon-wrapper icon-svo" aria-hidden="true">
+                  🧩
+                </div>
+                <span class="status-badge coming-soon">準備中</span>
+              </div>
+              <div class="card-body">
+                <h2 class="game-title">語順パズル（SVOカード）</h2>
+                <p class="game-description">英語の語順通りにカードを並べ替えて英文を作ろう！</p>
+              </div>
+              <div class="card-footer">
+                <span>レベル: ふつう</span>
+                <span class="play-action-text">あそぶ <span class="arrow-icon">→</span></span>
+              </div>
+            </a>
+
+            <!-- ゲーム3: かんたん会話作成 -->
+            <a 
+              href="games/dialogue/index.html" 
+              class="game-card" 
+              data-status="coming-soon"
+              aria-label="かんたん会話作成（準備中）"
+            >
+              <div class="card-header">
+                <div class="game-icon-wrapper icon-dialogue" aria-hidden="true">
+                  💬
+                </div>
+                <span class="status-badge coming-soon">準備中</span>
+              </div>
+              <div class="card-body">
+                <h2 class="game-title">かんたん会話作成</h2>
+                <p class="game-description">キャラクターと英語でおしゃべりしてみよう</p>
+              </div>
+              <div class="card-footer">
+                <span>レベル: チャレンジ</span>
+                <span class="play-action-text">あそぶ <span class="arrow-icon">→</span></span>
+              </div>
+            </a>
+
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="site-footer">
+      <div class="container">
+        <p>🍙 © 2026 Onigiri English - Kids English Learning App</p>
+      </div>
+    </footer>
+
+    <!-- 準備中モーダル -->
+    <div 
+      id="comingSoonModal" 
+      class="modal-overlay" 
+      role="dialog" 
+      aria-modal="true" 
+      aria-labelledby="modalTitle" 
+      aria-hidden="true"
+    >
+      <div class="modal-content">
+        <div class="modal-mascot" aria-hidden="true">🍙</div>
+        <h3 id="modalTitle" class="modal-title">準備中です！</h3>
+        <p id="modalMessage" class="modal-text">このゲームは現在準備中です！お楽しみに！</p>
+        <button id="modalCloseBtn" class="modal-btn-close" type="button">
+          わかった！
+        </button>
+      </div>
+    </div>
+
+    <!-- ポータル画面用ロジック（ES Modules） -->
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

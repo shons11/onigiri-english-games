@@ -1,0 +1,471 @@
+/* ==========================================================================
+   Onigiri English - 共通スタイルシート (css/style.css)
+   対象: 小学生〜英検初級層向け 英語学習ポータル
+   ========================================================================== */
+
+/* Google Fontsの読み込み（親しみやすい丸ゴシックフォント） */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Outfit:wght@600;700;800&display=swap');
+
+/* CSS変数（おにぎり・和モダン＆ポップなカラーパレット） */
+:root {
+  --color-bg: #F5F7FB;
+  --color-card-bg: #FFFFFF;
+  --color-text-main: #2D3748;
+  --color-text-muted: #718096;
+  --color-primary: #FF6B6B;       /* うめぼし・サーモンピンク */
+  --color-primary-hover: #FA5252;
+  --color-secondary: #4DABF7;     /* さわやかなスカイブルー */
+  --color-accent-yellow: #FFD43B; /* たまごイエロー */
+  --color-accent-green: #38D9A9;  /* のり・まっちゃグリーン */
+  --color-nori: #1E293B;          /* おにぎりの海苔ブラック */
+  --color-border: #E2E8F0;
+  --color-badge-bg: #FFF3BF;
+  --color-badge-text: #D9480F;
+
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px -4px rgba(26, 38, 74, 0.08);
+  --shadow-hover: 0 16px 32px -6px rgba(26, 38, 74, 0.14);
+
+  --radius-sm: 0.75rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 1.75rem;
+  --radius-full: 9999px;
+
+  --transition-normal: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* リセット＆基本スタイル */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* アクセシビリティ: リンク・ボタンフォーカス */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   レイアウトコンテナ
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* ==========================================================================
+   ヘッダー (Header)
+   ========================================================================== */
+.site-header {
+  background-color: #FFFFFF;
+  border-bottom: 2px solid #EDF2F7;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.site-header .header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--color-nori);
+  transition: var(--transition-normal);
+}
+
+.brand-logo:hover {
+  transform: scale(1.02);
+}
+
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  user-select: none;
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: 'Outfit', 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-nori);
+  line-height: 1.1;
+}
+
+.brand-tagline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   ヒーローセクション (Hero Section)
+   ========================================================================== */
+.hero-section {
+  padding: 3rem 0 2rem;
+  text-align: center;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #FFE3E3;
+  color: #C92A2A;
+  font-size: 0.875rem;
+  font-weight: 800;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  color: var(--color-nori);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   ゲーム選択グリッド (Games Grid)
+   ========================================================================== */
+.main-content {
+  flex: 1;
+  padding-bottom: 4rem;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.75rem;
+  margin-top: 1.5rem;
+}
+
+/* ゲームカード */
+.game-card {
+  position: relative;
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: var(--transition-normal);
+  cursor: pointer;
+  padding: 1.75rem;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+  border-color: #CBD5E1;
+}
+
+.game-card:active {
+  transform: translateY(-2px);
+}
+
+/* カード上部：アイコン＆バッジ */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.game-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+.game-card:hover .game-icon-wrapper {
+  transform: scale(1.1) rotate(-3deg);
+}
+
+/* アイコン個別背景テーマ */
+.icon-word {
+  background: linear-gradient(135deg, #FFE8CC 0%, #FFD8A8 100%);
+  color: #D9480F;
+}
+
+.icon-svo {
+  background: linear-gradient(135deg, #D0EBFF 0%, #A5D8FF 100%);
+  color: #1971C2;
+}
+
+.icon-dialogue {
+  background: linear-gradient(135deg, #E6FCF5 0%, #C3FAE8 100%);
+  color: #0CA678;
+}
+
+/* ステータスタグ（準備中） */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.status-badge.coming-soon {
+  background-color: var(--color-badge-bg);
+  color: var(--color-badge-text);
+  border: 1px solid #FFE066;
+}
+
+/* カード本文 */
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-nori);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.game-description {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+/* カード下部アクション案内 */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid #F1F3F5;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.play-action-text {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-secondary);
+}
+
+.game-card:hover .play-action-text {
+  color: var(--color-primary);
+}
+
+.arrow-icon {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.game-card:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   準備中モーダル (Coming Soon Modal)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 440px;
+  text-align: center;
+  padding: 2.25rem 2rem;
+  transform: scale(0.92);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 3px solid #FFF3BF;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-mascot {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+  animation: bounce 1.2s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.modal-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--color-nori);
+  margin-bottom: 0.5rem;
+}
+
+.modal-text {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.modal-btn-close {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.85rem 2.2rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.35);
+  transition: var(--transition-normal);
+  min-height: 48px;
+  min-width: 160px;
+}
+
+.modal-btn-close:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.45);
+}
+
+.modal-btn-close:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   フッター (Footer)
+   ========================================================================== */
+.site-footer {
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--color-border);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+.site-footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+/* ==========================================================================
+   レスポンシブ調整 (Responsive)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .hero-section {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .game-card {
+    padding: 1.35rem;
+  }
+
+  .modal-content {
+    padding: 1.75rem 1.25rem;
+  }
+}

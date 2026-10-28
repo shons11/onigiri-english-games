@@ -1,0 +1,6 @@
+{
+  "name": "Onigiri English",
+  "description": "子ども向け英語学習Webアプリ。英単語スタディ、語順パズル、英会話などの楽しいミニゲームで英語を学ぼう！",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
