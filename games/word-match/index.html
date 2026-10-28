@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>英単語スタディ - Onigiri English</title>
+    <meta name="description" content="小学生向け英単語学習。代名詞、自然、教科、動物、日常の動作をネイティブ音声と一緒に覚えよう！" />
+    
+    <!-- 専用スタイルシート -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="game-header">
+      <div class="container header-inner">
+        <a href="../../index.html" class="back-link" aria-label="ポータル画面へ戻る">
+          <span aria-hidden="true">←</span>
+          <span>ポータルへ</span>
+        </a>
+
+        <div class="header-title-wrap">
+          <span class="header-badge-icon" aria-hidden="true">🔤</span>
+          <h1 class="game-page-title">英単語スタディ</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-area">
+      <div class="container">
+        <!-- 案内バナー -->
+        <section class="intro-banner">
+          <div class="intro-badge">
+            <span aria-hidden="true">🍙</span>
+            <span>単語をおぼえて レベルアップ！</span>
+          </div>
+          <h2 class="intro-title">あそびたいモードを えらぼう！</h2>
+          <p class="intro-desc">
+            カードをタップするとネイティブの英語音声がながれるよ。なんかいもきいてみよう！
+          </p>
+        </section>
+
+        <!-- サブゲーム選択メニュー -->
+        <section class="mode-selection-section" aria-label="サブゲーム選択">
+          <div class="mode-grid">
+            <!-- カード1: 英単語じてん -->
+            <button 
+              id="dictModeCard" 
+              class="mode-card active" 
+              type="button"
+              aria-expanded="true"
+              aria-controls="dictionaryArea"
+            >
+              <div class="mode-icon-box dict-icon-box" aria-hidden="true">
+                📖
+              </div>
+              <div class="mode-content">
+                <div class="mode-title-row">
+                  <h3 class="mode-title">英単語じてん（図鑑）</h3>
+                  <span class="mode-tag tag-ready">あそべるよ</span>
+                </div>
+                <p class="mode-desc">カテゴリごとの単語と発音をチェック！</p>
+              </div>
+            </button>
+
+            <!-- カード2: 単語クイズ（準備中） -->
+            <button 
+              id="quizModeCard" 
+              class="mode-card" 
+              type="button"
+              aria-label="単語クイズ（現在準備中）"
+            >
+              <div class="mode-icon-box quiz-icon-box" aria-hidden="true">
+                ❓
+              </div>
+              <div class="mode-content">
+                <div class="mode-title-row">
+                  <h3 class="mode-title">単語クイズ</h3>
+                  <span class="mode-tag tag-coming-soon">準備中</span>
+                </div>
+                <p class="mode-desc">英語の意味を当てる4択クイズに挑戦！</p>
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <!-- 単語辞書エリア -->
+        <section id="dictionaryArea" class="dictionary-area" aria-label="英単語じてんエリア">
+          <div class="dict-header-row">
+            <div class="dict-title-box">
+              <span aria-hidden="true" style="font-size: 1.5rem;">📖</span>
+              <h3 id="currentGroupName">代名詞</h3>
+            </div>
+            <div class="dict-tip-group">
+              <div class="speed-control-wrapper">
+                <label for="playbackSpeedSelect" class="speed-label">
+                  <span aria-hidden="true">⚡</span>はやさ:
+                </label>
+                <select id="playbackSpeedSelect" class="speed-select" aria-label="音声の再生スピード">
+                  <option value="0.5">0.5倍（ゆっくり）</option>
+                  <option value="0.8">0.8倍（ややゆっくり）</option>
+                  <option value="1.0" selected>1倍（ふつう）</option>
+                </select>
+              </div>
+              <div class="dict-tip">
+                <span aria-hidden="true">🔊</span>
+                <span>タップで発音</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- グループ切替タブ -->
+          <div 
+            id="groupTabsContainer" 
+            class="group-tabs-container" 
+            role="tablist" 
+            aria-label="単語カテゴリ"
+          >
+            <!-- JSで動的にボタン生成 -->
+          </div>
+
+          <!-- 単語リスト -->
+          <div 
+            id="wordListContainer" 
+            class="word-list-container" 
+            role="region" 
+            aria-live="polite"
+          >
+            <!-- JSで動的に単語カードを生成 -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- クイズ準備中モーダル -->
+    <div 
+      id="quizComingSoonModal" 
+      class="modal-overlay" 
+      role="dialog" 
+      aria-modal="true" 
+      aria-labelledby="quizModalTitle" 
+      aria-hidden="true"
+    >
+      <div class="modal-content">
+        <div class="modal-mascot" aria-hidden="true">🎯</div>
+        <h3 id="quizModalTitle" class="modal-title">準備中です！</h3>
+        <p class="modal-text">「単語クイズ」は現在準備中です！<br />まずは「英単語じてん」で単語をおぼえてみてね！</p>
+        <button id="modalCloseBtn" class="modal-btn-close" type="button">
+          わかった！
+        </button>
+      </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="game-footer">
+      <div class="container">
+        <p>🍙 © 2026 Onigiri English - 英単語スタディ</p>
+      </div>
+    </footer>
+
+    <!-- 専用ロジック（ES Modules） -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

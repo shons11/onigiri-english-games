@@ -1,0 +1,678 @@
+/* ==========================================================================
+   英単語スタディ専用スタイル (games/word-match/style.css)
+   ========================================================================== */
+
+/* 共通フォント読み込み */
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Outfit:wght@600;700;800&display=swap');
+
+:root {
+  --color-bg: #F4F8FA;
+  --color-card-bg: #FFFFFF;
+  --color-nori: #1E293B;
+  --color-text-main: #2D3748;
+  --color-text-muted: #64748B;
+  
+  --color-orange: #FF7E36;
+  --color-orange-light: #FFF0E6;
+  --color-blue: #3B82F6;
+  --color-blue-light: #EFF6FF;
+  --color-green: #10B981;
+  --color-green-light: #ECFDF5;
+  --color-yellow: #F59E0B;
+  --color-yellow-light: #FEF3C7;
+  --color-pink: #EC4899;
+  --color-pink-light: #FDF2F8;
+
+  --color-primary: #FF7E36;
+  --color-border: #E2E8F0;
+  
+  --radius-sm: 0.6rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 20px -4px rgba(30, 41, 59, 0.08);
+  --shadow-hover: 0 14px 28px -6px rgba(30, 41, 59, 0.14);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ==========================================================================
+   ヘッダー (Header)
+   ========================================================================== */
+.game-header {
+  background-color: #FFFFFF;
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.85rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #F1F5F9;
+  color: var(--color-nori);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  min-height: 42px;
+}
+
+.back-link:hover {
+  background-color: #E2E8F0;
+  transform: translateX(-3px);
+}
+
+.header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.header-badge-icon {
+  font-size: 1.8rem;
+  user-select: none;
+}
+
+.game-page-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-nori);
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   メインエリア & イントロ
+   ========================================================================== */
+.main-area {
+  flex: 1;
+  padding: 2rem 0 4rem;
+}
+
+.intro-banner {
+  text-align: center;
+  margin-bottom: 2.25rem;
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-orange-light);
+  color: #C2410C;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.75rem;
+}
+
+.intro-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  color: var(--color-nori);
+  margin-bottom: 0.5rem;
+}
+
+.intro-desc {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   サブゲーム選択メニュー (Sub-game Mode Cards)
+   ========================================================================== */
+.mode-selection-section {
+  margin-bottom: 2.5rem;
+}
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.mode-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--color-border);
+  padding: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  font-family: inherit;
+}
+
+.mode-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: #CBD5E1;
+}
+
+.mode-card.active {
+  border-color: var(--color-orange);
+  background: linear-gradient(to bottom, #FFFFFF, var(--color-orange-light));
+  box-shadow: 0 10px 24px -4px rgba(255, 126, 54, 0.25);
+}
+
+.mode-icon-box {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.mode-card:hover .mode-icon-box {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.dict-icon-box {
+  background-color: #FFE8D6;
+}
+
+.quiz-icon-box {
+  background-color: #E0E7FF;
+}
+
+.mode-content {
+  flex: 1;
+}
+
+.mode-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.mode-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-nori);
+}
+
+.mode-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+.mode-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.tag-ready {
+  background-color: #DCFCE7;
+  color: #15803D;
+}
+
+.tag-coming-soon {
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+/* ==========================================================================
+   単語辞書エリア (Word Dictionary Area)
+   ========================================================================== */
+.dictionary-area {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.dictionary-area.hidden {
+  display: none;
+}
+
+.dict-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px dashed #E2E8F0;
+}
+
+.dict-title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.dict-title-box h3 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--color-nori);
+}
+
+.dict-tip-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.speed-control-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.speed-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--color-nori);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  user-select: none;
+}
+
+.speed-select {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--color-orange);
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--color-orange);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.speed-select:hover {
+  background-color: #FFF7ED;
+  border-color: var(--color-orange-hover);
+}
+
+.speed-select:focus {
+  box-shadow: 0 0 0 3px rgba(255, 126, 54, 0.2);
+}
+
+.dict-tip {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  background-color: #F8FAFC;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* グループ切替タブ */
+.group-tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+}
+
+.group-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  color: var(--color-text-main);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 800;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+}
+
+.group-tab-btn:hover {
+  background-color: #EDF2F7;
+  border-color: #CBD5E1;
+  transform: translateY(-2px);
+}
+
+.group-tab-btn.active {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+  border-color: var(--color-orange);
+  box-shadow: 0 4px 12px rgba(255, 126, 54, 0.35);
+}
+
+.tab-badge {
+  font-size: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-full);
+}
+
+.group-tab-btn:not(.active) .tab-badge {
+  background-color: #E2E8F0;
+  color: #475569;
+}
+
+/* 単語リスト一覧 */
+.word-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* 単語カード行 */
+.word-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: #FFFFFF;
+  border: 2px solid #F1F5F9;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.word-item-card:hover {
+  background-color: #FAFCFF;
+  border-color: #BFDBFE;
+  transform: translateX(4px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.1);
+}
+
+/* 音声再生中ハイライト */
+.word-item-card.playing {
+  background: linear-gradient(90deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-color: var(--color-blue);
+  transform: scale(1.02);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+}
+
+.word-japanese-col {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-nori);
+  min-width: 140px;
+}
+
+.word-emoji {
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+.word-english-col {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.word-english-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-blue);
+  letter-spacing: 0.01em;
+}
+
+.word-phonetic {
+  font-family: 'Outfit', 'Lucida Sans Unicode', 'Arial Unicode MS', -apple-system, system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: #475569;
+  background-color: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.sound-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: var(--color-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.word-item-card:hover .sound-btn {
+  background-color: var(--color-blue);
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+.word-item-card.playing .sound-btn {
+  background-color: var(--color-blue);
+  color: #FFFFFF;
+  animation: pulse-ring 1s infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+/* ==========================================================================
+   クイズ準備中モーダル
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  padding: 2.25rem 2rem;
+  transform: scale(0.92);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 3px solid #FEF3C7;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+.modal-mascot {
+  font-size: 3.5rem;
+  margin-bottom: 0.75rem;
+  user-select: none;
+}
+
+.modal-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-nori);
+  margin-bottom: 0.5rem;
+}
+
+.modal-text {
+  font-size: 0.98rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+.modal-btn-close {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 0.8rem 2.2rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 126, 54, 0.35);
+  transition: all 0.2s ease;
+  min-height: 48px;
+}
+
+.modal-btn-close:hover {
+  background-color: #EA580C;
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   フッター
+   ========================================================================== */
+.game-footer {
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--color-border);
+  padding: 1.75rem 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   レスポンシブ
+   ========================================================================== */
+@media (max-width: 640px) {
+  .header-inner {
+    flex-wrap: wrap;
+  }
+  
+  .game-page-title {
+    font-size: 1.2rem;
+  }
+
+  .dictionary-area {
+    padding: 1.25rem;
+  }
+
+  .word-item-card {
+    padding: 0.85rem 1rem;
+  }
+
+  .word-japanese-col {
+    min-width: 100px;
+    font-size: 1.05rem;
+  }
+
+  .word-english-col {
+    gap: 0.6rem;
+  }
+
+  .word-phonetic {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.4rem;
+  }
+
+  .sound-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.05rem;
+  }
+
+  .group-tab-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.9rem;
+  }
+}

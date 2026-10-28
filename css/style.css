@@ -240,6 +240,11 @@ button:focus-visible {
 }
 
 /* アイコン個別背景テーマ */
+.icon-phonics {
+  background: linear-gradient(135deg, #FFE3E3 0%, #FFC9C9 100%);
+  color: #E03131;
+}
+
 .icon-word {
   background: linear-gradient(135deg, #FFE8CC 0%, #FFD8A8 100%);
   color: #D9480F;
@@ -273,6 +278,12 @@ button:focus-visible {
   background-color: var(--color-badge-bg);
   color: var(--color-badge-text);
   border: 1px solid #FFE066;
+}
+
+.status-badge.ready {
+  background-color: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #86EFAC;
 }
 
 /* カード本文 */
