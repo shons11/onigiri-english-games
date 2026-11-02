@@ -108,72 +108,191 @@ let currentGroupId = 'pronouns';
 /** 音声再生スピード倍率（0.5, 0.8, 1.0） */
 let playbackSpeedMultiplier = 1.0;
 
-/** 音声の女性・男性交互切り替え管理 */
+/** 音声の女性・男性交互切り替え管理（初回は女性から開始） */
 let isNextVoiceFemale = true;
 
-function getAlternateVoiceSettings() {
+/** キャッシュされた最適音声（Voice A: 女性 / Voice B: 男性） */
+let cachedVoices = {
+  female: null,
+  male: null
+};
+
+/**
+ * en-US 音声かどうかを判定するヘルパー
+ * @param {SpeechSynthesisVoice} voice
+ */
+function isEnUsVoice(voice) {
+  if (!voice || !voice.lang) return false;
+  const lang = voice.lang.replace('_', '-').toLowerCase();
+  return lang === 'en-us' || lang.startsWith('en-us');
+}
+
+/**
+ * 端末・ブラウザごとの音声リストから最適な女性音声（Voice A）・男性音声（Voice B）を選定
+ */
+export function resolveCrossPlatformVoices() {
+  if (!('speechSynthesis' in window)) return;
+
+  const allVoices = window.speechSynthesis.getVoices();
+  if (!allVoices || allVoices.length === 0) return;
+
+  const enUsVoices = allVoices.filter(isEnUsVoice);
+  const allEnVoices = allVoices.filter(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  const femalePool = enUsVoices.length > 0 ? enUsVoices : allEnVoices;
+
+  // 男性音声名の判定正規表現
+  const maleNamePattern = /\b(male|david|guy|mark|alex|daniel|oliver|george|fred|tom|aaron|reed|evan|nathan|roger|steffan|christopher|eric|andrew|brian)\b|en-us-x-(iom|sfg|tpd)/i;
+  // 女性音声名の判定正規表現
+  const femaleNamePattern = /\b(female|zira|samantha|victoria|karen|jenny|aria|ava|allison|susan|fiona|cora|michelle|monica)\b/i;
+
+  // 【女性（Voice A）優先順位】
+  // 1. 'Google US English'（Chrome/Android/PC共通のクリアな女性音声）
+  // 2. 'Samantha' (iOS/macOS標準のクリアな女性声)
+  // 3. 'Microsoft Zira' / 'Jenny' / 'Aria' または 'Natural' を含む en-US 女性音声
+  // 4. 名前・URIに女性名または 'female' を含む en-US 音声
+  // 5. 男性名を含まない en-US デフォルト音声
+  const femaleVoice =
+    femalePool.find(v => v.name.includes('Google US English') && !maleNamePattern.test(`${v.name} ${v.voiceURI}`)) ||
+    femalePool.find(v => v.name.includes('Samantha')) ||
+    femalePool.find(v =>
+      (v.name.includes('Microsoft Zira') ||
+        v.name.includes('Jenny') ||
+        v.name.includes('Aria') ||
+        (v.name.includes('Natural') && !maleNamePattern.test(v.name)))
+    ) ||
+    femalePool.find(v => femaleNamePattern.test(`${v.name} ${v.voiceURI}`)) ||
+    femalePool.find(v => !maleNamePattern.test(`${v.name} ${v.voiceURI}`) && v.default) ||
+    femalePool.find(v => !maleNamePattern.test(`${v.name} ${v.voiceURI}`)) ||
+    femalePool[0] ||
+    null;
+
+  // 【男性（Voice B）優先順位】
+  // 1. Google US English の男性バリアント（Android等で存在する場合）
+  // 2. en-US の実在する男性音声（Microsoft David / Guy / Mark / Natural男性、macOS/iOSの Alex / Aaron / Tom / Fred 等）
+  // 3. Chrome標準の Google 男性音声（'Google UK English Male'）および英語圏の明瞭な男性音声（Daniel / Oliver 等）
+  // 4. 名前・URIに 'male' を含む英語音声
+  // 5. ピッチ変更が確実に効くローカル音声（localService: true）、または女性音声のピッチ下げフォールバック
+  const maleVoice =
+    enUsVoices.find(v => v.name.includes('Google US English') && maleNamePattern.test(`${v.name} ${v.voiceURI}`)) ||
+    enUsVoices.find(v =>
+      v.name.includes('Microsoft David') ||
+      v.name.includes('Microsoft Guy') ||
+      v.name.includes('Microsoft Mark') ||
+      (v.name.includes('Natural') && maleNamePattern.test(v.name))
+    ) ||
+    enUsVoices.find(v => /\b(alex|aaron|tom|fred|evan|nathan|reed|david|guy|mark)\b/i.test(v.name)) ||
+    enUsVoices.find(v => maleNamePattern.test(`${v.name} ${v.voiceURI}`)) ||
+    allEnVoices.find(v => v.name.includes('Google UK English Male')) ||
+    allEnVoices.find(v => maleNamePattern.test(`${v.name} ${v.voiceURI}`)) ||
+    enUsVoices.find(v => v !== femaleVoice && v.localService) ||
+    enUsVoices.find(v => v.localService) ||
+    femaleVoice ||
+    null;
+
+  cachedVoices.female = femaleVoice;
+  cachedVoices.male = maleVoice;
+}
+
+/**
+ * 単語が子音（発音上）で終わるかを判定するヘルパー
+ * `write`, `smile`, `science`, `Japanese`, `giraffe` など末尾がサイレントeの単語も子音終わりとして正確に判定する
+ * @param {string} word - 英語テキスト
+ * @param {string} [phonetic] - 発音記号（指定されている場合）
+ */
+function endsWithConsonantSound(word, phonetic = '') {
+  if (phonetic) {
+    const cleanIpa = phonetic.replace(/^\/|\/$/g, '').trim();
+    // IPAの末尾が子音記号（p, b, t, d, k, g, ɡ, f, v, θ, ð, s, z, ʃ, ʒ, m, n, ŋ, l, r）で終わるか判定
+    return /[pbtdkgɡfvθðszʃʒmnŋlr]$/i.test(cleanIpa);
+  }
+  const clean = word.trim().replace(/[.!,?]$/, '').toLowerCase();
+  // サイレントeで終わるが発音上は子音で終わる単語（write, smile, science, japanese, giraffe 等）
+  if (/[bcdfghjklmnpqrstvwxz]e$/i.test(clean) && !/^(he|she|we|me|be|see|tree|sea|free|three)$/i.test(clean)) {
+    return true;
+  }
+  // 通常の子音文字で終わる単語（sky, play, study 等 母音発音の y は除外）
+  return /[bcdfghjklmnpqrstvwxz]$/i.test(clean);
+}
+
+/**
+ * 末尾の子音がTTSエンジンで飲み込まれず（無破裂化せず）、明瞭に開放発音されるようテキストを整形
+ * @param {string} text - 元の英単語テキスト
+ * @param {boolean} hasFinalConsonant - 発音上、末尾が子音で終わるかどうか
+ */
+function formatForClearArticulation(text, hasFinalConsonant) {
+  const clean = text.trim().replace(/[.!,?]$/, '');
+  if (!clean) return '';
+
+  // 先頭を大文字化することで、代名詞（it等）や動詞（eat, write等）が機能語・弱形として語尾省略（[ɪʔ]等）されるのを防止
+  const capitalized = clean.charAt(0).toUpperCase() + clean.slice(1);
+
+  // 末尾に空白パディングを付与し、ブラウザの音声出力バッファが語尾の無声破裂音（/t/, /k/, /p/ 等）の余韻をクリップするのを防止
+  return hasFinalConsonant ? `${capitalized}!   ` : `${capitalized}.   `;
+}
+
+/**
+ * クリックごとに女性 ➔ 男性 ➔ 女性... と切り替わる音声設定を取得
+ * @param {boolean} [hasFinalConsonant=true] - 末尾が子音で終わる単語かどうか
+ */
+function getAlternateVoiceSettings(hasFinalConsonant = true) {
+  // 常に最新の音声リストから解決を試みる
+  resolveCrossPlatformVoices();
+
   const isFemale = isNextVoiceFemale;
   isNextVoiceFemale = !isNextVoiceFemale;
 
-  let selectedVoice = null;
-  if ('speechSynthesis' in window) {
-    const voices = window.speechSynthesis.getVoices();
-    const englishVoices = voices.filter(v => v.lang.startsWith('en'));
+  const selectedVoice = isFemale ? cachedVoices.female : (cachedVoices.male || cachedVoices.female);
 
-    if (isFemale) {
-      // 語尾子音の明瞭度が高い女性ボイスを優先（Karen, Samantha, Victoria, Jenny, Zira等）
-      selectedVoice = englishVoices.find(v => 
-        /karen|samantha|victoria|jenny|zira|google us english|ava/i.test(v.name)
-      ) || englishVoices.find(v => !/male|david|alex|fred|guy|george|mark|daniel/i.test(v.name));
-    } else {
-      // 好評の爽やかで明るい男性ボイス
-      selectedVoice = englishVoices.find(v => 
-        /google uk english male|alex|guy|daniel|oliver/i.test(v.name)
-      ) || englishVoices.find(v => 
-        /male|david|fred|george|mark|tom/i.test(v.name)
-      );
-    }
-  }
+  // 男性ボイスが女性ボイスと別エンジン（実在する男性ボイス）かどうかを判定
+  const isDistinctMaleVoice = !isFemale && cachedVoices.male && cachedVoices.male !== cachedVoices.female;
 
-  // 女性の声は落ち着いた速度（基本0.82）、男性は0.92。選択されたスピード倍率を反映
-  const baseRate = isFemale ? 0.82 : 0.92;
-  const calculatedRate = Math.round(baseRate * playbackSpeedMultiplier * 100) / 100;
+  // 基本再生速度（rate）: 0.9 をアプリの「1倍」とする。
+  // 子音終わりの単語は語尾子音の調音フレームを確保するためわずかに丁寧な速度（0.86）に補正
+  const BASE_RATE = hasFinalConsonant ? 0.86 : 0.90;
+  const calculatedRate = Math.round(BASE_RATE * playbackSpeedMultiplier * 100) / 100;
+
+  // ピッチ設定：
+  // - 女性音声: 0.95（少し低めで落ち着いたナチュラルなトーン）
+  // - 男性音声（専用男性ボイスの場合）: 1.06（0.85に下げすぎると語尾が低音で潰れて子音が消えるため、子音が際立つ明瞭なピッチを維持）
+  // - 男性音声（単一音声のフォールバック時のみ）: 0.85（同一ボイスを男性化）
+  const targetPitch = isFemale
+    ? 0.95
+    : (isDistinctMaleVoice ? 1.06 : 0.85);
 
   return {
     isFemale,
-    voice: selectedVoice || null,
-    // 女性は子音がはっきり抜ける自然な1.08、男性は好評の1.10
-    pitch: isFemale ? 1.08 : 1.10,
+    voice: selectedVoice,
+    pitch: targetPitch,
     rate: calculatedRate
   };
 }
 
 /**
- * Web Speech API を用いた英語音声読み上げ（女性／男性交互 ＆ ナチュラル発声）
+ * Web Speech API を用いた英語音声読み上げ（クロスプラットフォーム対応・男女交互再生・語尾子音強化）
  * @param {string} text - 発音する英語
  * @param {HTMLElement} [elementToHighlight] - 再生中にハイライトするカード要素
+ * @param {string} [phonetic] - 発音記号（語尾子音判定の精度向上用）
  */
-export function speakWord(text, elementToHighlight = null) {
+export function speakWord(text, elementToHighlight = null, phonetic = '') {
   if (!('speechSynthesis' in window)) {
     console.warn('Speech synthesis is not supported in this browser.');
     return;
   }
 
+  // 連打時の音重なりや詰まりを防ぐため、再生直前にキューを安全にリセット
   window.speechSynthesis.cancel();
 
-  const voiceSettings = getAlternateVoiceSettings();
-
-  // 末尾の子音（t, d, k, p, g, b, th, sh, ch 等）がTTSで飲み込まれず明瞭に破裂・開放されるよう制御
-  const clean = text.trim().replace(/[.!]$/, '');
-  const endsWithConsonant = /[bcdfghjklmnpqrstvwxz]$/i.test(clean);
-  // 子音で終わる単語は感嘆符（!）を付与することで開放音（Release burst）を発生させ、母音終わりはピリオド（.）で自然に
-  const formattedText = endsWithConsonant ? `${clean}!` : `${clean}.`;
+  const hasFinalConsonant = endsWithConsonantSound(text, phonetic);
+  const voiceSettings = getAlternateVoiceSettings(hasFinalConsonant);
+  const formattedText = formatForClearArticulation(text, hasFinalConsonant);
 
   const utterance = new SpeechSynthesisUtterance(formattedText);
-  utterance.lang = 'en-US';
+  // 選択された音声のlangに合わせる（不一致によるブラウザ側のデフォルト女性音声への強制上書きを防止）
+  utterance.lang = (voiceSettings.voice && voiceSettings.voice.lang) ? voiceSettings.voice.lang : 'en-US';
   utterance.rate = voiceSettings.rate;
   utterance.pitch = voiceSettings.pitch;
   utterance.volume = 1.0;
+
   if (voiceSettings.voice) {
     utterance.voice = voiceSettings.voice;
   }
@@ -188,12 +307,10 @@ export function speakWord(text, elementToHighlight = null) {
     }
   };
 
-  utterance.onend = () => {
-    cleanup();
-  };
+  utterance.onend = cleanup;
   utterance.onerror = cleanup;
 
-  setTimeout(cleanup, 2200);
+  setTimeout(cleanup, 2500);
 
   window.speechSynthesis.speak(utterance);
 }
@@ -240,7 +357,7 @@ export function renderWordList(groupId) {
     // クリックおよびキーボードEnterで発音
     const playHandler = (e) => {
       e.stopPropagation();
-      speakWord(item.speech || item.english, card);
+      speakWord(item.speech || item.english, card, item.phonetic);
     };
 
     card.addEventListener('click', playHandler);
@@ -365,6 +482,13 @@ export function initSpeedControl() {
  * 画面全体の初期化
  */
 export function initWordMatch() {
+  if ('speechSynthesis' in window) {
+    resolveCrossPlatformVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+      resolveCrossPlatformVoices();
+    };
+  }
+
   initGroupTabs();
   renderWordList(currentGroupId);
   initSpeedControl();
@@ -378,4 +502,5 @@ if (document.readyState === 'loading') {
 } else {
   initWordMatch();
 }
+
 
