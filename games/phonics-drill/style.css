@@ -1,0 +1,836 @@
+/* ==========================================================================
+   おにぎりのフォニックスドリル専用スタイル (games/phonics-drill/style.css)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Outfit:wght@600;700;800&display=swap');
+
+:root {
+  --color-bg: #F4F8FA;
+  --color-card-bg: #FFFFFF;
+  --color-nori: #1E293B;
+  --color-text-main: #2D3748;
+  --color-text-muted: #64748B;
+
+  --color-orange: #FF7E36;
+  --color-orange-light: #FFF0E6;
+  --color-blue: #3B82F6;
+  --color-blue-light: #EFF6FF;
+  --color-green: #10B981;
+  --color-green-light: #ECFDF5;
+  --color-yellow: #F59E0B;
+  --color-yellow-light: #FEF3C7;
+  --color-purple: #8B5CF6;
+  --color-purple-light: #F5F3FF;
+
+  --color-border: #E2E8F0;
+
+  --radius-sm: 0.6rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 20px -4px rgba(30, 41, 59, 0.08);
+  --shadow-hover: 0 14px 28px -6px rgba(30, 41, 59, 0.14);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'M PLUS Rounded 1c', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ==========================================================================
+   ヘッダー
+   ========================================================================== */
+.game-header {
+  background-color: #FFFFFF;
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.85rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #F1F5F9;
+  color: var(--color-nori);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+  min-height: 42px;
+}
+
+.back-link:hover {
+  background-color: #E2E8F0;
+  transform: translateX(-3px);
+}
+
+.header-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.header-badge-icon {
+  font-size: 1.8rem;
+  user-select: none;
+}
+
+.game-page-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-nori);
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   メインエリア ＆ イントロバナー
+   ========================================================================== */
+.main-area {
+  flex: 1;
+  padding: 2rem 0 4rem;
+}
+
+.intro-banner {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.intro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-orange-light);
+  color: #C2410C;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.75rem;
+}
+
+.intro-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 900;
+  color: var(--color-nori);
+  margin-bottom: 0.5rem;
+}
+
+.intro-desc {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   1. 「子音編（1）」「母音編（2）」選択ボタン
+   ========================================================================== */
+.category-selection-section {
+  margin-bottom: 2.25rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 1.5rem;
+}
+
+.category-card {
+  background-color: var(--color-card-bg);
+  border-radius: var(--radius-lg);
+  border: 3px solid var(--color-border);
+  padding: 1.6rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-md);
+  font-family: inherit;
+  user-select: none;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: #CBD5E1;
+}
+
+.category-card.active {
+  border-color: var(--color-orange);
+  background: linear-gradient(to bottom, #FFFFFF, var(--color-orange-light));
+  box-shadow: 0 10px 24px -4px rgba(255, 126, 54, 0.25);
+}
+
+#consonantModeBtn.category-card.active {
+  border-color: var(--color-blue);
+  background: linear-gradient(to bottom, #FFFFFF, var(--color-blue-light));
+  box-shadow: 0 10px 24px -4px rgba(59, 130, 246, 0.25);
+}
+
+.category-icon-box {
+  width: 66px;
+  height: 66px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.category-card:hover .category-icon-box {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+.vowel-icon-box {
+  background-color: #FFE8D6;
+  color: #C2410C;
+}
+
+.consonant-icon-box {
+  background-color: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.category-content {
+  flex: 1;
+}
+
+.category-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.category-title {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--color-nori);
+}
+
+.category-count-badge {
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  background-color: #F1F5F9;
+  color: #334155;
+}
+
+.category-card.active .category-count-badge {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+}
+
+#consonantModeBtn.category-card.active .category-count-badge {
+  background-color: var(--color-blue);
+  color: #FFFFFF;
+}
+
+.category-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   ドリル一覧セクション ＆ コントロールバー
+   ========================================================================== */
+.phonics-list-section {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+}
+
+.drill-header-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 2px dashed #E2E8F0;
+}
+
+.drill-title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.drill-category-index {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: #FFE8D6;
+  color: #C2410C;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.consonant-theme .drill-category-index {
+  background-color: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.drill-category-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-nori);
+}
+
+.drill-category-subtitle {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+
+/* 3段階スピード倍率ボタン */
+.speed-buttons-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background-color: #F8FAFC;
+  border: 2px solid #E2E8F0;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.speed-box-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--color-nori);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding-left: 0.25rem;
+  user-select: none;
+}
+
+.speed-btn-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.speed-stage-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--color-text-main);
+  background-color: #FFFFFF;
+  border: 1.5px solid #CBD5E1;
+  border-radius: var(--radius-full);
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  min-height: 34px;
+}
+
+.speed-stage-btn:hover {
+  background-color: #FFF7ED;
+  border-color: var(--color-orange);
+}
+
+.speed-stage-btn.active {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+  border-color: var(--color-orange);
+  box-shadow: 0 2px 8px rgba(255, 126, 54, 0.35);
+}
+
+/* ==========================================================================
+   母音グループ（プルダウン開閉対応）/ 子音グループ見出し
+   ========================================================================== */
+.phonics-groups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.phonics-group-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.phonics-group-header {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: linear-gradient(90deg, #FFF7ED 0%, #FFEDD5 100%);
+  border: 2px solid #FED7AA;
+  border-left: 6px solid var(--color-orange);
+  padding: 0.95rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+button.phonics-group-header {
+  cursor: pointer;
+}
+
+button.phonics-group-header:hover {
+  background: linear-gradient(90deg, #FFEDD5 0%, #FED7AA 100%);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.consonant-theme .phonics-group-header {
+  background: linear-gradient(90deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-color: #BFDBFE;
+  border-left-color: var(--color-blue);
+}
+
+.phonics-group-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.phonics-group-badge {
+  background-color: var(--color-orange);
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+
+.consonant-theme .phonics-group-badge {
+  background-color: var(--color-blue);
+}
+
+.phonics-group-title {
+  font-size: 1.18rem;
+  font-weight: 900;
+  color: var(--color-nori);
+}
+
+.phonics-group-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.phonics-group-note {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.group-accordion-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: #FFFFFF;
+  border: 1.5px solid #FDBA74;
+  color: #C2410C;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.group-accordion-arrow {
+  display: inline-block;
+  transition: transform 0.22s ease;
+}
+
+.phonics-group-block:not(.collapsed) .group-accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.phonics-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.phonics-group-block.collapsed .phonics-cards-list {
+  display: none;
+}
+
+/* ==========================================================================
+   各発音記号の2段構成カード
+   - 1段目: 番号 + 大きく発音記号 + 音の作り方（口の作り方）の説明（表示専用）
+   - 2段目: その音が入る簡単な英単語3つの例（クリックで3単語連続再生）
+   ========================================================================== */
+.phonics-item-card {
+  background-color: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.phonics-item-card:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* 1段目：発音記号 ＋ 口の作り方説明（クリック再生なし・表示専用） */
+.phonics-row-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.4rem;
+  background-color: #FFFFFF;
+  border-bottom: 2px dashed #E2E8F0;
+  text-align: left;
+}
+
+.phonics-top-left {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex: 1;
+}
+
+/* 通し番号バッジ */
+.phonics-number-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-nori);
+  color: #FFFFFF;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 大きく表示する発音記号ボックス */
+.phonics-symbol-box {
+  min-width: 92px;
+  height: 68px;
+  padding: 0 1rem;
+  border-radius: var(--radius-md);
+  background-color: #FFF7ED;
+  border: 2.5px solid #FDBA74;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.consonant-theme .phonics-symbol-box {
+  background-color: #EFF6FF;
+  border-color: #93C5FD;
+}
+
+.phonics-symbol-text {
+  font-family: 'Outfit', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
+  font-size: 2.15rem;
+  font-weight: 800;
+  color: #C2410C;
+  line-height: 1.1;
+}
+
+.consonant-theme .phonics-symbol-text {
+  color: #1D4ED8;
+}
+
+/* 口の作り方・音の出し方の説明 */
+.phonics-guide-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.phonics-guide-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.phonics-guide-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #9A3412;
+  background-color: #FFEDD5;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.voice-type-tag {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+}
+
+.voice-type-tag.voiceless {
+  background-color: #E0F2FE;
+  color: #0369A1;
+}
+
+.voice-type-tag.voiced {
+  background-color: #FCE7F3;
+  color: #BE185D;
+}
+
+.phonics-guide-text {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-nori);
+  line-height: 1.5;
+}
+
+/* 2段目：その音が入る簡単な単語3つの例（クリックで3単語連続再生） */
+.phonics-row-bottom {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  padding: 0.9rem 1.4rem;
+  background-color: #F8FAFC;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.18s ease;
+}
+
+.phonics-row-bottom:hover {
+  background-color: #EFF6FF;
+}
+
+.phonics-row-bottom.playing {
+  background: linear-gradient(90deg, #EFF6FF 0%, #DBEAFE 100%);
+}
+
+.examples-left-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.examples-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-right: 0.2rem;
+}
+
+.examples-words-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.example-word-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: #FFFFFF;
+  border: 2px solid #E2E8F0;
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.8rem;
+  transition: all 0.18s ease;
+}
+
+.phonics-row-bottom:hover .example-word-chip {
+  border-color: #BFDBFE;
+}
+
+.example-word-chip.speaking-now {
+  background-color: #2563EB;
+  border-color: #1D4ED8;
+  color: #FFFFFF;
+  transform: scale(1.06);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* 英単語の該当箇所（オレンジ＋下線） */
+.example-word-en {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--color-nori);
+}
+
+.example-word-en b {
+  color: var(--color-orange);
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 発音記号の該当箇所（オレンジのみ・下線なし） */
+.example-word-ipa {
+  font-family: 'Outfit', 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
+  font-size: 0.88rem;
+  color: #64748B;
+  font-weight: 600;
+}
+
+.example-word-ipa b {
+  color: var(--color-orange);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.example-word-chip.speaking-now .example-word-en,
+.example-word-chip.speaking-now .example-word-ipa,
+.example-word-chip.speaking-now .example-word-ja {
+  color: #FFFFFF;
+}
+
+.example-word-chip.speaking-now .example-word-en b,
+.example-word-chip.speaking-now .example-word-ipa b {
+  color: #FDE047;
+}
+
+.example-word-ja {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #64748B;
+}
+
+.examples-play-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  color: var(--color-blue);
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.phonics-row-bottom:hover .examples-play-badge,
+.phonics-row-bottom.playing .examples-play-badge {
+  background-color: var(--color-blue);
+  border-color: var(--color-blue);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   フッター ＆ レスポンシブ
+   ========================================================================== */
+.game-footer {
+  background-color: #FFFFFF;
+  border-top: 1px solid var(--color-border);
+  padding: 1.75rem 0;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .phonics-list-section {
+    padding: 1.25rem;
+  }
+
+  .phonics-row-top {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .phonics-top-left {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .phonics-symbol-box {
+    min-width: 74px;
+    height: 60px;
+  }
+
+  .phonics-symbol-text {
+    font-size: 1.75rem;
+  }
+
+  .phonics-row-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem 1rem;
+  }
+
+  .examples-play-badge {
+    align-self: flex-end;
+  }
+}

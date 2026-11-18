@@ -14,77 +14,87 @@
 export const WORD_GROUPS = {
   pronouns: {
     id: 'pronouns',
-    name: '代名詞',
+    name: '名前の代わりの言葉',
     emoji: '👤',
-    description: 'ひとや ものを あらわすことば',
+    description: 'ひとや ものを さすことば',
     words: [
       { id: 'pro_1', japanese: 'わたし', english: 'I', speech: 'I', emoji: '🙋', phonetic: '/aɪ/' },
-      { id: 'pro_2', japanese: 'あなた', english: 'you', speech: 'you', emoji: '👉', phonetic: '/ju/' },
-      { id: 'pro_3', japanese: 'かれ', english: 'he', speech: 'he', emoji: '👦', phonetic: '/hi/' },
-      { id: 'pro_4', japanese: 'かのじょ', english: 'she', speech: 'she', emoji: '👧', phonetic: '/ʃi/' },
-      { id: 'pro_5', japanese: 'それ', english: 'it', speech: 'it', emoji: '📦', phonetic: '/ɪt/' },
-      { id: 'pro_6', japanese: 'わたしたち', english: 'we', speech: 'we', emoji: '👨‍👩‍👧', phonetic: '/wi/' },
-      { id: 'pro_7', japanese: 'かれら / 彼女ら', english: 'they', speech: 'they', emoji: '👥', phonetic: '/ðeɪ/' },
-      { id: 'pro_8', japanese: 'わたしの', english: 'my', speech: 'my', emoji: '🎒', phonetic: '/maɪ/' },
-      { id: 'pro_9', japanese: 'あなたの', english: 'your', speech: 'your', emoji: '🧢', phonetic: '/jɔːr/' },
+      { id: 'pro_2', japanese: 'わたしたち', english: 'we', speech: 'we', emoji: '👨‍👩‍👧', phonetic: '/wi/' },
+      { id: 'pro_3', japanese: 'あなた', english: 'you', speech: 'you', emoji: '👉', phonetic: '/ju/' },
+      { id: 'pro_4', japanese: 'あなたたち', english: 'you', speech: 'you', emoji: '🫵', phonetic: '/ju/' },
+      { id: 'pro_5', japanese: 'かれ', english: 'he', speech: 'he', emoji: '👦', phonetic: '/hi/' },
+      { id: 'pro_6', japanese: 'かのじょ', english: 'she', speech: 'she', emoji: '👧', phonetic: '/ʃi/' },
+      { id: 'pro_7', japanese: 'それ', english: 'it', speech: 'it', emoji: '📦', phonetic: '/ɪt/' },
+      { id: 'pro_8', japanese: 'かれら/かのじょら/それら', english: 'they', speech: 'they', emoji: '👥', phonetic: '/ðeɪ/' },
+      { id: 'pro_9', japanese: 'わたしの', english: 'my', speech: 'my', emoji: '🎒', phonetic: '/maɪ/' },
       { id: 'pro_10', japanese: 'わたしたちの', english: 'our', speech: 'our', emoji: '🏠', phonetic: '/ˈaʊər/' },
+      { id: 'pro_11', japanese: 'あなたの', english: 'your', speech: 'your', emoji: '🧢', phonetic: '/jɔːr/' },
+      { id: 'pro_12', japanese: 'あなたたちの', english: 'your', speech: 'your', emoji: '🏫', phonetic: '/jɔːr/' },
     ]
   },
-  nature: {
-    id: 'nature',
-    name: '名詞：自然',
-    emoji: '🌿',
-    description: '空や天気、まわりの自然',
-    words: [
-      { id: 'nat_1', japanese: 'そら（空）', english: 'sky', speech: 'sky', emoji: '🌤️', phonetic: '/skaɪ/' },
-      { id: 'nat_2', japanese: 'たいよう（太陽）', english: 'sun', speech: 'sun', emoji: '☀️', phonetic: '/sʌn/' },
-      { id: 'nat_3', japanese: 'あめ（雨）', english: 'rain', speech: 'rain', emoji: '🌧️', phonetic: '/reɪn/' },
-      { id: 'nat_4', japanese: 'くも（雲）', english: 'cloud', speech: 'cloud', emoji: '☁️', phonetic: '/klaʊd/' },
-      { id: 'nat_5', japanese: 'やま（山）', english: 'mountain', speech: 'mountain', emoji: '⛰️', phonetic: '/ˈmaʊntn/' },
-      { id: 'nat_6', japanese: 'かわ（川）', english: 'river', speech: 'river', emoji: '🏞️', phonetic: '/ˈrɪvər/' },
-      { id: 'nat_7', japanese: 'うみ（海）', english: 'sea', speech: 'sea', emoji: '🌊', phonetic: '/siː/' },
-      { id: 'nat_8', japanese: 'ほし（星）', english: 'star', speech: 'star', emoji: '⭐', phonetic: '/stɑːr/' },
-      { id: 'nat_9', japanese: 'はな（花）', english: 'flower', speech: 'flower', emoji: '🌸', phonetic: '/ˈflaʊər/' },
-      { id: 'nat_10', japanese: 'き（木）', english: 'tree', speech: 'tree', emoji: '🌳', phonetic: '/triː/' },
-    ]
-  },
-  subjects: {
-    id: 'subjects',
-    name: '名詞：教科',
-    emoji: '📚',
-    description: 'がっこうの じゅぎょうや かもく',
-    words: [
-      { id: 'sub_1', japanese: 'えいご（英語）', english: 'English', speech: 'English', emoji: '🔤', phonetic: '/ˈɪŋɡlɪʃ/' },
-      { id: 'sub_2', japanese: 'さんすう（算数・数学）', english: 'math', speech: 'math', emoji: '➗', phonetic: '/mæθ/' },
-      { id: 'sub_3', japanese: 'りか（理科）', english: 'science', speech: 'science', emoji: '🔬', phonetic: '/ˈsaɪəns/' },
-      { id: 'sub_4', japanese: 'おんがく（音楽）', english: 'music', speech: 'music', emoji: '🎵', phonetic: '/ˈmjuːzɪk/' },
-      { id: 'sub_5', japanese: 'ずこう（図工・美術）', english: 'art', speech: 'art', emoji: '🎨', phonetic: '/ɑːrt/' },
-      { id: 'sub_6', japanese: 'たいいく（体育）', english: 'PE', speech: 'P E', emoji: '⚽', phonetic: '/ˌpiː ˈiː/' },
-      { id: 'sub_7', japanese: 'こくご（国語）', english: 'Japanese', speech: 'Japanese', emoji: '📖', phonetic: '/ˌdʒæpəˈniːz/' },
-      { id: 'sub_8', japanese: 'しゃかい（社会）', english: 'social studies', speech: 'social studies', emoji: '🗺️', phonetic: '/ˈsoʊʃl ˈstʌdiz/' },
-    ]
-  },
-  animals: {
-    id: 'animals',
-    name: '名詞：動物',
-    emoji: '🐾',
-    description: 'どうぶつえんや いえにいる いきもの',
-    words: [
-      { id: 'ani_1', japanese: 'いぬ（犬）', english: 'dog', speech: 'dog', emoji: '🐶', phonetic: '/dɔːɡ/' },
-      { id: 'ani_2', japanese: 'ねこ（猫）', english: 'cat', speech: 'cat', emoji: '🐱', phonetic: '/kæt/' },
-      { id: 'ani_3', japanese: 'ぞう（象）', english: 'elephant', speech: 'elephant', emoji: '🐘', phonetic: '/ˈelɪfənt/' },
-      { id: 'ani_4', japanese: 'ライオン', english: 'lion', speech: 'lion', emoji: '🦁', phonetic: '/ˈlaɪən/' },
-      { id: 'ani_5', japanese: 'パンダ', english: 'panda', speech: 'panda', emoji: '🐼', phonetic: '/ˈpændə/' },
-      { id: 'ani_6', japanese: 'うさぎ', english: 'rabbit', speech: 'rabbit', emoji: '🐰', phonetic: '/ˈræbɪt/' },
-      { id: 'ani_7', japanese: 'くま（熊）', english: 'bear', speech: 'bear', emoji: '🐻', phonetic: '/ber/' },
-      { id: 'ani_8', japanese: 'さる（猿）', english: 'monkey', speech: 'monkey', emoji: '🐵', phonetic: '/ˈmʌŋki/' },
-      { id: 'ani_9', japanese: 'とり（鳥）', english: 'bird', speech: 'bird', emoji: '🐦', phonetic: '/bɜːrd/' },
-      { id: 'ani_10', japanese: 'さかな（魚）', english: 'fish', speech: 'fish', emoji: '🐟', phonetic: '/fɪʃ/' },
-    ]
+  nouns: {
+    id: 'nouns',
+    name: 'モノ・コトの名前',
+    emoji: '🏷️',
+    description: 'しぜんや どうぶつ、がっこうの かもくなどの なまえ',
+    subGroups: {
+      nature: {
+        id: 'nature',
+        name: '自然',
+        emoji: '🌿',
+        description: '空や天気、まわりの自然',
+        words: [
+          { id: 'nat_1', japanese: 'そら（空）', english: 'sky', speech: 'sky', emoji: '🌤️', phonetic: '/skaɪ/' },
+          { id: 'nat_2', japanese: 'たいよう（太陽）', english: 'sun', speech: 'sun', emoji: '☀️', phonetic: '/sʌn/' },
+          { id: 'nat_3', japanese: 'あめ（雨）', english: 'rain', speech: 'rain', emoji: '🌧️', phonetic: '/reɪn/' },
+          { id: 'nat_4', japanese: 'くも（雲）', english: 'cloud', speech: 'cloud', emoji: '☁️', phonetic: '/klaʊd/' },
+          { id: 'nat_5', japanese: 'やま（山）', english: 'mountain', speech: 'mountain', emoji: '⛰️', phonetic: '/ˈmaʊntn/' },
+          { id: 'nat_6', japanese: 'かわ（川）', english: 'river', speech: 'river', emoji: '🏞️', phonetic: '/ˈrɪvər/' },
+          { id: 'nat_7', japanese: 'うみ（海）', english: 'sea', speech: 'sea', emoji: '🌊', phonetic: '/siː/' },
+          { id: 'nat_8', japanese: 'ほし（星）', english: 'star', speech: 'star', emoji: '⭐', phonetic: '/stɑːr/' },
+          { id: 'nat_9', japanese: 'はな（花）', english: 'flower', speech: 'flower', emoji: '🌸', phonetic: '/ˈflaʊər/' },
+          { id: 'nat_10', japanese: 'き（木）', english: 'tree', speech: 'tree', emoji: '🌳', phonetic: '/triː/' },
+        ]
+      },
+      subjects: {
+        id: 'subjects',
+        name: '教科',
+        emoji: '📚',
+        description: 'がっこうの じゅぎょうや かもく',
+        words: [
+          { id: 'sub_1', japanese: 'えいご（英語）', english: 'English', speech: 'English', emoji: '🔤', phonetic: '/ˈɪŋɡlɪʃ/' },
+          { id: 'sub_2', japanese: 'さんすう（算数・数学）', english: 'math', speech: 'math', emoji: '➗', phonetic: '/mæθ/' },
+          { id: 'sub_3', japanese: 'りか（理科）', english: 'science', speech: 'science', emoji: '🔬', phonetic: '/ˈsaɪəns/' },
+          { id: 'sub_4', japanese: 'おんがく（音楽）', english: 'music', speech: 'music', emoji: '🎵', phonetic: '/ˈmjuːzɪk/' },
+          { id: 'sub_5', japanese: 'ずこう（図工・美術）', english: 'art', speech: 'art', emoji: '🎨', phonetic: '/ɑːrt/' },
+          { id: 'sub_6', japanese: 'たいいく（体育）', english: 'PE', speech: 'P E', emoji: '⚽', phonetic: '/ˌpiː ˈiː/' },
+          { id: 'sub_7', japanese: 'こくご（国語）', english: 'Japanese', speech: 'Japanese', emoji: '📖', phonetic: '/ˌdʒæpəˈniːz/' },
+          { id: 'sub_8', japanese: 'しゃかい（社会）', english: 'social studies', speech: 'social studies', emoji: '🗺️', phonetic: '/ˈsoʊʃl ˈstʌdiz/' },
+        ]
+      },
+      animals: {
+        id: 'animals',
+        name: '動物',
+        emoji: '🐾',
+        description: 'どうぶつえんや いえにいる いきもの',
+        words: [
+          { id: 'ani_1', japanese: 'いぬ（犬）', english: 'dog', speech: 'dog', emoji: '🐶', phonetic: '/dɔːɡ/' },
+          { id: 'ani_2', japanese: 'ねこ（猫）', english: 'cat', speech: 'cat', emoji: '🐱', phonetic: '/kæt/' },
+          { id: 'ani_3', japanese: 'ぞう（象）', english: 'elephant', speech: 'elephant', emoji: '🐘', phonetic: '/ˈelɪfənt/' },
+          { id: 'ani_4', japanese: 'ライオン', english: 'lion', speech: 'lion', emoji: '🦁', phonetic: '/ˈlaɪən/' },
+          { id: 'ani_5', japanese: 'パンダ', english: 'panda', speech: 'panda', emoji: '🐼', phonetic: '/ˈpændə/' },
+          { id: 'ani_6', japanese: 'うさぎ', english: 'rabbit', speech: 'rabbit', emoji: '🐰', phonetic: '/ˈræbɪt/' },
+          { id: 'ani_7', japanese: 'くま（熊）', english: 'bear', speech: 'bear', emoji: '🐻', phonetic: '/ber/' },
+          { id: 'ani_8', japanese: 'さる（猿）', english: 'monkey', speech: 'monkey', emoji: '🐵', phonetic: '/ˈmʌŋki/' },
+          { id: 'ani_9', japanese: 'とり（鳥）', english: 'bird', speech: 'bird', emoji: '🐦', phonetic: '/bɜːrd/' },
+          { id: 'ani_10', japanese: 'さかな（魚）', english: 'fish', speech: 'fish', emoji: '🐟', phonetic: '/fɪʃ/' },
+        ]
+      }
+    }
   },
   actions: {
     id: 'actions',
-    name: '日常の動作',
+    name: '動きを表す言葉（日常の動作）',
     emoji: '🏃',
     description: 'まいにちの うごきや どうさ',
     words: [
@@ -102,8 +112,11 @@ export const WORD_GROUPS = {
   }
 };
 
-/** 現在選択されているグループ */
+/** 現在選択されているメイングループ */
 let currentGroupId = 'pronouns';
+
+/** 現在選択されているサブグループ（モノ・コトの名前用） */
+let currentSubGroupId = 'nature';
 
 /** 音声再生スピード倍率（0.5, 0.8, 1.0） */
 let playbackSpeedMultiplier = 1.0;
@@ -316,6 +329,66 @@ export function speakWord(text, elementToHighlight = null, phonetic = '') {
 }
 
 /**
+ * グループ内の総単語数を取得するヘルパー
+ * @param {object} group
+ */
+function getGroupTotalWordCount(group) {
+  if (!group) return 0;
+  if (Array.isArray(group.words)) return group.words.length;
+  if (group.subGroups) {
+    return Object.values(group.subGroups).reduce((sum, sub) => sum + (sub.words ? sub.words.length : 0), 0);
+  }
+  return 0;
+}
+
+/**
+ * サブカテゴリ切替タブ（モノ・コトの名前の中分類）のレンダリングと制御
+ * @param {object} group - 現在選択中のメイングループ
+ */
+export function renderSubGroupTabs(group) {
+  const subTabsContainer = document.getElementById('subGroupTabsContainer');
+  if (!subTabsContainer) return;
+
+  if (!group || !group.subGroups) {
+    subTabsContainer.classList.add('hidden');
+    subTabsContainer.innerHTML = '';
+    return;
+  }
+
+  subTabsContainer.classList.remove('hidden');
+  subTabsContainer.innerHTML = `<span class="sub-group-label">📂 しゅるいをえらぶ：</span>`;
+
+  const subGroupsList = Object.values(group.subGroups);
+  if (!group.subGroups[currentSubGroupId] && subGroupsList.length > 0) {
+    currentSubGroupId = subGroupsList[0].id;
+  }
+
+  subGroupsList.forEach((subGroup) => {
+    const subBtn = document.createElement('button');
+    subBtn.type = 'button';
+    subBtn.className = `sub-group-tab-btn ${subGroup.id === currentSubGroupId ? 'active' : ''}`;
+    subBtn.setAttribute('data-sub-group-id', subGroup.id);
+    subBtn.innerHTML = `
+      <span>${subGroup.emoji}</span>
+      <span>${subGroup.name}</span>
+      <span class="tab-badge">${subGroup.words.length}</span>
+    `;
+
+    subBtn.addEventListener('click', () => {
+      currentSubGroupId = subGroup.id;
+
+      subTabsContainer.querySelectorAll('.sub-group-tab-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-sub-group-id') === subGroup.id);
+      });
+
+      renderWordList(currentGroupId);
+    });
+
+    subTabsContainer.appendChild(subBtn);
+  });
+}
+
+/**
  * 単語リストのレンダリング
  * @param {string} groupId - 表示対象のグループID
  */
@@ -326,14 +399,28 @@ export function renderWordList(groupId) {
   
   if (!group || !listContainer) return;
 
-  if (groupNameElem) {
-    groupNameElem.textContent = `${group.emoji} ${group.name}（${group.words.length}単語）`;
+  // サブグループを持つカテゴリ（モノ・コトの名前）かどうかを判定
+  let targetWords = [];
+  if (group.subGroups) {
+    const subGroup = group.subGroups[currentSubGroupId] || Object.values(group.subGroups)[0];
+    if (subGroup) {
+      currentSubGroupId = subGroup.id;
+      targetWords = subGroup.words;
+      if (groupNameElem) {
+        groupNameElem.textContent = `${group.emoji} ${group.name} ＞ ${subGroup.emoji} ${subGroup.name}（${targetWords.length}単語）`;
+      }
+    }
+  } else {
+    targetWords = group.words || [];
+    if (groupNameElem) {
+      groupNameElem.textContent = `${group.emoji} ${group.name}（${targetWords.length}単語）`;
+    }
   }
 
   // リストを構築
   listContainer.innerHTML = '';
 
-  group.words.forEach((item) => {
+  targetWords.forEach((item) => {
     const card = document.createElement('div');
     card.className = 'word-item-card';
     card.setAttribute('role', 'button');
@@ -382,6 +469,7 @@ export function initGroupTabs() {
   tabsContainer.innerHTML = '';
 
   Object.values(WORD_GROUPS).forEach((group) => {
+    const totalCount = getGroupTotalWordCount(group);
     const tabBtn = document.createElement('button');
     tabBtn.type = 'button';
     tabBtn.className = `group-tab-btn ${group.id === currentGroupId ? 'active' : ''}`;
@@ -389,7 +477,7 @@ export function initGroupTabs() {
     tabBtn.innerHTML = `
       <span>${group.emoji}</span>
       <span>${group.name}</span>
-      <span class="tab-badge">${group.words.length}</span>
+      <span class="tab-badge">${totalCount}</span>
     `;
 
     tabBtn.addEventListener('click', () => {
@@ -400,11 +488,15 @@ export function initGroupTabs() {
         btn.classList.toggle('active', btn.getAttribute('data-group-id') === group.id);
       });
 
+      renderSubGroupTabs(group);
       renderWordList(currentGroupId);
     });
 
     tabsContainer.appendChild(tabBtn);
   });
+
+  // 初期状態のサブタブ表示制御
+  renderSubGroupTabs(WORD_GROUPS[currentGroupId]);
 }
 
 /**

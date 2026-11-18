@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>おにぎりのフォニックスドリル - Onigiri English</title>
+    <meta
+      name="description"
+      content="英語の発音記号（母音編・子音編）の口の作り方と単語例をネイティブ音声で楽しくマスターしよう！"
+    />
+
+    <!-- 専用スタイルシート -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="game-header">
+      <div class="container header-inner">
+        <a href="../../index.html" class="back-link" aria-label="ポータル画面へ戻る">
+          <span aria-hidden="true">←</span>
+          <span>ポータルへ</span>
+        </a>
+
+        <div class="header-title-wrap">
+          <span class="header-badge-icon" aria-hidden="true">🍙</span>
+          <h1 class="game-page-title">おにぎりのフォニックスドリル</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-area">
+      <div class="container">
+        <!-- 案内バナー -->
+        <section class="intro-banner">
+          <div class="intro-badge">
+            <span aria-hidden="true">🗣️</span>
+            <span>口のつくりかたと 音をセットでおぼえよう！</span>
+          </div>
+          <h2 class="intro-title">子音編・母音編を えらんでスタート！</h2>
+          <p class="intro-desc">
+            発音記号と口のつくりかたをチェックして、下段の単語例をタップすると「3つの英単語」が連続でながれるよ！
+          </p>
+        </section>
+
+        <!-- 1. 「子音編」「母音編」の2大選択ボタン（左：1 子音編 / 右：2 母音編） -->
+        <section class="category-selection-section" aria-label="子音編・母音編の選択">
+          <div class="category-grid" role="tablist" aria-label="発音カテゴリ選択">
+            <button
+              id="consonantModeBtn"
+              class="category-card active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="phonicsListSection"
+            >
+              <div class="category-icon-box consonant-icon-box" aria-hidden="true">
+                1
+              </div>
+              <div class="category-content">
+                <div class="category-title-row">
+                  <h3 class="category-title">子音編（しいん）</h3>
+                  <span class="category-count-badge">全24音</span>
+                </div>
+                <p class="category-desc">
+                  息だけの音（無声音）と喉がふるえる音（有声音）をセットでおぼえよう
+                </p>
+              </div>
+            </button>
+
+            <button
+              id="vowelModeBtn"
+              class="category-card"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="phonicsListSection"
+            >
+              <div class="category-icon-box vowel-icon-box" aria-hidden="true">
+                2
+              </div>
+              <div class="category-content">
+                <div class="category-title-row">
+                  <h3 class="category-title">母音編（ぼいん）</h3>
+                  <span class="category-count-badge">全22音</span>
+                </div>
+                <p class="category-desc">
+                  ア〜オ系・R系・二重母音！口の開け方や舌の位置をマスターしよう
+                </p>
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <!-- 発音記号リストセクション -->
+        <section id="phonicsListSection" class="phonics-list-section consonant-theme" aria-label="発音記号ドリル一覧">
+          <!-- コントロールバー（現在の編タイトル ＆ 3段階スピード切替ボタン） -->
+          <div class="drill-header-bar">
+            <div class="drill-title-box">
+              <span id="currentCategoryEmoji" class="drill-category-index" aria-hidden="true">1</span>
+              <div>
+                <h3 id="currentCategoryTitle" class="drill-category-title">子音編（全24音）</h3>
+                <p id="currentCategorySubtitle" class="drill-category-subtitle">
+                  喉を震わせない「無声音」と、喉を震わせる「有声音」のペアを順番にマスターしよう！
+                </p>
+              </div>
+            </div>
+
+            <div class="drill-controls-group">
+              <!-- 3段階スピード倍率ボタン -->
+              <div class="speed-buttons-box" role="group" aria-label="音声読み上げスピード倍率">
+                <span class="speed-box-label">
+                  <span aria-hidden="true">⚡</span>はやさ:
+                </span>
+                <div class="speed-btn-group">
+                  <button
+                    type="button"
+                    class="speed-stage-btn"
+                    data-speed="0.5"
+                    aria-pressed="false"
+                  >
+                    0.5倍
+                  </button>
+                  <button
+                    type="button"
+                    class="speed-stage-btn"
+                    data-speed="0.8"
+                    aria-pressed="false"
+                  >
+                    0.8倍
+                  </button>
+                  <button
+                    type="button"
+                    class="speed-stage-btn active"
+                    data-speed="1.0"
+                    aria-pressed="true"
+                  >
+                    1倍
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 発音記号グループ＆カード一覧コンテナ（JSで動的描画） -->
+          <div id="phonicsGroupsContainer" class="phonics-groups-container" aria-live="polite">
+            <!-- JSで生成 -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- フッター -->
+    <footer class="game-footer">
+      <div class="container">
+        <p>🍙 © 2026 Onigiri English - おにぎりのフォニックスドリル</p>
+      </div>
+    </footer>
+
+    <!-- 専用ロジック（ES Modules） -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

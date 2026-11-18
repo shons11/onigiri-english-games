@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>英単語スタディ - Onigiri English</title>
-    <meta name="description" content="小学生向け英単語学習。代名詞、自然、教科、動物、日常の動作をネイティブ音声と一緒に覚えよう！" />
+    <meta name="description" content="小学生向け英単語学習。名前の代わりの言葉、モノ・コトの名前（自然・教科・動物）、日常の動作をネイティブ音声と一緒に覚えよう！" />
     
     <!-- 専用スタイルシート -->
     <link rel="stylesheet" href="./style.css" />
@@ -89,7 +89,7 @@
           <div class="dict-header-row">
             <div class="dict-title-box">
               <span aria-hidden="true" style="font-size: 1.5rem;">📖</span>
-              <h3 id="currentGroupName">代名詞</h3>
+              <h3 id="currentGroupName">名前の代わりの言葉</h3>
             </div>
             <div class="dict-tip-group">
               <div class="speed-control-wrapper">
@@ -109,7 +109,7 @@
             </div>
           </div>
 
-          <!-- グループ切替タブ -->
+          <!-- グループ切替タブ（メインカテゴリ） -->
           <div 
             id="groupTabsContainer" 
             class="group-tabs-container" 
@@ -117,6 +117,16 @@
             aria-label="単語カテゴリ"
           >
             <!-- JSで動的にボタン生成 -->
+          </div>
+
+          <!-- サブカテゴリ切替タブ（モノ・コトの名前選択時のみ表示） -->
+          <div 
+            id="subGroupTabsContainer" 
+            class="sub-group-tabs-container hidden" 
+            role="tablist" 
+            aria-label="モノ・コトの名前の種類"
+          >
+            <!-- JSで動的にサブカテゴリボタン生成 -->
           </div>
 
           <!-- 単語リスト -->

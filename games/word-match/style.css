@@ -416,6 +416,69 @@ body {
   color: #475569;
 }
 
+/* サブカテゴリ切替タブ（モノ・コトの名前用） */
+.sub-group-tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: -0.75rem;
+  margin-bottom: 1.75rem;
+  padding: 0.85rem 1.1rem;
+  background-color: #FFF7ED;
+  border: 2px dashed #FDBA74;
+  border-radius: var(--radius-md);
+}
+
+.sub-group-tabs-container.hidden {
+  display: none;
+}
+
+.sub-group-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #C2410C;
+  margin-right: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.sub-group-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #FFFFFF;
+  border: 2px solid #FED7AA;
+  color: var(--color-text-main);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 800;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 38px;
+}
+
+.sub-group-tab-btn:hover {
+  background-color: #FFEDD5;
+  border-color: #FB923C;
+  transform: translateY(-1px);
+}
+
+.sub-group-tab-btn.active {
+  background-color: var(--color-blue);
+  color: #FFFFFF;
+  border-color: var(--color-blue);
+  box-shadow: 0 3px 10px rgba(59, 130, 246, 0.3);
+}
+
+.sub-group-tab-btn:not(.active) .tab-badge {
+  background-color: #F1F5F9;
+  color: #475569;
+}
+
 /* 単語リスト一覧 */
 .word-list-container {
   display: flex;
