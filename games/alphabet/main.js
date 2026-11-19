@@ -1071,6 +1071,15 @@ function handleRoundCompleted() {
 }
 
 /**
+ * 1回のポインター移動イベントでなぞり位置が進めるサンプル点数の上限値
+ * （一気に先へ飛んでしまう現象を防ぎ、一定の速度まででしかなぞれないように制限）
+ */
+export const MAX_TRACE_STEP_PER_EVENT = 2;
+
+/** なぞり判定の許容半径（SVG論理座標系） */
+export const TRACE_HIT_RADIUS = 10.5;
+
+/**
  * ポインター移動・押下時のなぞり判定
  */
 function processPracticePointerAt(logicalPt) {
@@ -1084,7 +1093,7 @@ function processPracticePointerAt(logicalPt) {
   // 点ストローク ('i' や 'j' の点) の場合
   if (pts[0].isDot) {
     const dist = Math.hypot(logicalPt.x - pts[0].x, logicalPt.y - pts[0].y);
-    if (dist <= 16) {
+    if (dist <= 13) {
       stroke.progressIndex = 0;
       stroke.completed = true;
       spawnSparklesAt(pts[0].x, pts[0].y, 12);
@@ -1096,22 +1105,23 @@ function processPracticePointerAt(logicalPt) {
     return;
   }
 
-  // 通常ストローク：現在の進捗インデックスから前方のウィンドウ内で近接点を探索
-  const hitRadius = 15.5;
-  const maxLookAhead = 14;
-  const startSearch = Math.max(0, stroke.progressIndex);
-  const endSearch = Math.min(pts.length - 1, stroke.progressIndex + maxLookAhead);
+  // 通常ストローク：現在の進捗インデックスの直後から MAX_TRACE_STEP_PER_EVENT 点ずつ連続して判定範囲内にある場合のみ前進
+  const nextStepStart = stroke.progressIndex + 1;
+  const maxStepEnd = Math.min(pts.length - 1, stroke.progressIndex + MAX_TRACE_STEP_PER_EVENT);
 
   let advanced = false;
   let latestPt = null;
 
-  for (let i = startSearch; i <= endSearch; i++) {
+  for (let i = nextStepStart; i <= maxStepEnd; i++) {
     const p = pts[i];
     const d = Math.hypot(logicalPt.x - p.x, logicalPt.y - p.y);
-    if (d <= hitRadius && i > stroke.progressIndex) {
+    if (d <= TRACE_HIT_RADIUS) {
       stroke.progressIndex = i;
       latestPt = p;
       advanced = true;
+    } else {
+      // 途中の点を飛ばして先の点へワープしないよう、外れた時点でループを止める
+      break;
     }
   }
 
@@ -1119,8 +1129,8 @@ function processPracticePointerAt(logicalPt) {
     spawnSparklesAt(latestPt.x, latestPt.y, 4);
   }
 
-  // 終端付近（残り2サンプル点以内）まで到達したらストローク完了とみなす
-  if (stroke.progressIndex >= pts.length - 3) {
+  // 終端まで到達したらストローク完了とみなす
+  if (stroke.progressIndex >= pts.length - 1) {
     stroke.progressIndex = pts.length - 1;
     stroke.completed = true;
     const endPt = pts[pts.length - 1];
