@@ -240,6 +240,18 @@ button:focus-visible {
 }
 
 /* アイコン個別背景テーマ */
+.icon-alphabet {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  color: #D97706;
+}
+
+.title-pop-a {
+  display: inline-block;
+  font-size: 1.25rem;
+  vertical-align: middle;
+  transform: rotate(-4deg);
+}
+
 .icon-phonics {
   background: linear-gradient(135deg, #FFE3E3 0%, #FFC9C9 100%);
   color: #E03131;

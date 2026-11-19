@@ -31,16 +31,25 @@
     <!-- メインコンテンツ -->
     <main class="main-area">
       <div class="container">
-        <!-- 案内バナー -->
+        <!-- 案内バナー（タイトル ＋ 右側に動画ショートカットボタン） -->
         <section class="intro-banner">
           <div class="intro-badge">
             <span aria-hidden="true">🗣️</span>
             <span>口のつくりかたと 音をセットでおぼえよう！</span>
           </div>
-          <h2 class="intro-title">子音編・母音編を えらんでスタート！</h2>
-          <p class="intro-desc">
-            発音記号と口のつくりかたをチェックして、下段の単語例をタップすると「3つの英単語」が連続でながれるよ！
-          </p>
+          <div class="intro-title-row">
+            <h2 class="intro-title">子音編・母音編を えらんでスタート！</h2>
+            <button
+              id="openVideoModalBtn"
+              class="video-shortcut-btn"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="videoListModal"
+            >
+              <span class="video-btn-icon" aria-hidden="true">🎬</span>
+              <span>動画のせつめいをチェック！</span>
+            </button>
+          </div>
         </section>
 
         <!-- 1. 「子音編」「母音編」の2大選択ボタン（左：1 子音編 / 右：2 母音編） -->
@@ -149,6 +158,46 @@
         </section>
       </div>
     </main>
+
+    <!-- 解説動画一覧モーダル（背景ぼかし＋前面スクロールリスト） -->
+    <div
+      id="videoListModal"
+      class="video-modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="videoModalTitle"
+      aria-hidden="true"
+    >
+      <div class="video-modal-card">
+        <div class="video-modal-header">
+          <div class="video-modal-title-wrap">
+            <span class="video-modal-icon" aria-hidden="true">🎬</span>
+            <div>
+              <h3 id="videoModalTitle" class="video-modal-title">発音のせつめい動画リスト</h3>
+              <p class="video-modal-subtitle">見たい動画をえらぶと YouTube で再生されるよ！</p>
+            </div>
+          </div>
+          <button
+            id="closeVideoModalBtn"
+            class="video-modal-close-icon"
+            type="button"
+            aria-label="動画リストをとじる"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div id="videoModalList" class="video-modal-scroll-list">
+          <!-- JSで動画リストを動的生成 -->
+        </div>
+
+        <div class="video-modal-footer">
+          <button id="closeVideoModalFooterBtn" class="video-modal-close-btn" type="button">
+            とじる
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- フッター -->
     <footer class="game-footer">

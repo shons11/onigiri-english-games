@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>まずはここから！ アルファベット - Onigiri English</title>
+    <meta
+      name="description"
+      content="英語の基本！AからZまでのアルファベット26文字の正しい発音と口のつくりかたをネイティブ音声で楽しくマスターしよう！"
+    />
+
+    <!-- 専用スタイルシート -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- ヘッダー -->
+    <header class="game-header">
+      <div class="container header-inner">
+        <a href="../../index.html" class="back-link" aria-label="ポータル画面へ戻る">
+          <span aria-hidden="true">←</span>
+          <span>ポータルへ</span>
+        </a>
+
+        <div class="header-title-wrap">
+          <span class="header-badge-icon" aria-hidden="true">🅰️</span>
+          <h1 class="game-page-title">まずはここから！ アルファベット</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-area">
+      <div class="container">
+        <!-- 案内バナー（タイトル ＋ 右側に動画ショートカットボタン） -->
+        <section class="intro-banner">
+          <div class="intro-badge">
+            <span aria-hidden="true">🍙</span>
+            <span>AからZまで 声に出してよんでみよう！</span>
+          </div>
+          <div class="intro-title-row">
+            <h2 class="intro-title">アルファベットを タップしてスタート！</h2>
+            <button
+              id="openVideoModalBtn"
+              class="video-shortcut-btn"
+              type="button"
+              aria-haspopup="dialog"
+              aria-controls="videoListModal"
+            >
+              <span class="video-btn-icon" aria-hidden="true">🎬</span>
+              <span>動画のせつめいをチェック！</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- アルファベットリストセクション -->
+        <section id="alphabetListSection" class="alphabet-list-section" aria-label="アルファベット一覧">
+          <!-- コントロールバー（タイトル ＆ 3段階スピード切替ボタン） -->
+          <div class="drill-header-bar">
+            <div class="drill-title-box">
+              <span class="drill-category-index" aria-hidden="true">🅰️</span>
+              <div>
+                <h3 class="drill-category-title">アルファベット一覧（全26文字）</h3>
+                <p class="drill-category-subtitle">
+                  カードをタップすると大文字・小文字のアルファベットの発音がながれるよ！
+                </p>
+              </div>
+            </div>
+
+            <div class="drill-controls-group">
+              <!-- 3段階スピード倍率ボタン -->
+              <div class="speed-buttons-box" role="group" aria-label="音声読み上げスピード倍率">
+                <span class="speed-box-label">
+                  <span aria-hidden="true">⚡</span>はやさ:
+                </span>
+                <div class="speed-btn-group">
+                  <button
+                    type="button"
+                    class="speed-stage-btn"
+                    data-speed="0.5"
+                    aria-pressed="false"
+                  >
+                    0.5倍
+                  </button>
+                  <button
+                    type="button"
+                    class="speed-stage-btn"
+                    data-speed="0.8"
+                    aria-pressed="false"
+                  >
+                    0.8倍
+                  </button>
+                  <button
+                    type="button"
+                    class="speed-stage-btn active"
+                    data-speed="1.0"
+                    aria-pressed="true"
+                  >
+                    1倍
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- アルファベット26文字カード一覧コンテナ（JSで動的描画） -->
+          <div id="alphabetCardsContainer" class="alphabet-cards-container" aria-live="polite">
+            <!-- JSで生成 -->
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- 解説動画一覧モーダル（背景ぼかし＋前面スクロールリスト） -->
+    <div
+      id="videoListModal"
+      class="video-modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="videoModalTitle"
+      aria-hidden="true"
+    >
+      <div class="video-modal-card">
+        <div class="video-modal-header">
+          <div class="video-modal-title-wrap">
+            <span class="video-modal-icon" aria-hidden="true">🎬</span>
+            <div>
+              <h3 id="videoModalTitle" class="video-modal-title">アルファベットのせつめい動画</h3>
+              <p class="video-modal-subtitle">動画をえらぶと YouTube で再生されるよ！</p>
+            </div>
+          </div>
+          <button
+            id="closeVideoModalBtn"
+            class="video-modal-close-icon"
+            type="button"
+            aria-label="動画リストをとじる"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div id="videoModalList" class="video-modal-scroll-list">
+          <!-- JSで動画リストを動的生成 -->
+        </div>
+
+        <div class="video-modal-footer">
+          <button id="closeVideoModalFooterBtn" class="video-modal-close-btn" type="button">
+            とじる
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- かく練習をする！モーダル（画面いっぱいに表示・3回なぞり練習） -->
+    <div
+      id="practiceModal"
+      class="practice-modal-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="practiceModalTitle"
+      aria-hidden="true"
+    >
+      <div class="practice-modal-card">
+        <div class="practice-modal-header">
+          <div class="practice-header-left">
+            <span id="practiceLetterBadge" class="practice-letter-badge" aria-hidden="true">A a</span>
+            <div class="practice-title-group">
+              <h3 id="practiceModalTitle" class="practice-modal-title">さんかいれんしゅうしてみよう！</h3>
+              <p id="practiceModalSubStatus" class="practice-sub-status">
+                灰色の線を 書き順どおりに なぞってね！
+              </p>
+            </div>
+          </div>
+
+          <div class="practice-header-right">
+            <div id="practiceRemainBadge" class="practice-remain-badge" aria-live="polite">
+              1かいめ（3かい中）
+            </div>
+            <button
+              id="closePracticeModalBtn"
+              class="practice-close-btn"
+              type="button"
+              aria-label="練習画面をとじて元の画面にもどる"
+            >
+              ✕ とじる
+            </button>
+          </div>
+        </div>
+
+        <div class="practice-canvas-stage">
+          <canvas id="practiceTraceCanvas" class="practice-trace-canvas"></canvas>
+
+          <!-- 1回完了時の「あと？回！」ポップアップ表示 -->
+          <div id="practiceRoundNotice" class="practice-round-notice" aria-live="assertive" aria-hidden="true">
+            <span id="practiceRoundNoticeText" class="practice-round-notice-text">あと2回！</span>
+          </div>
+
+          <!-- 3回完了時の「Good Job！」1秒表示オーバーレイ -->
+          <div id="practiceGoodJobOverlay" class="practice-goodjob-overlay" aria-live="assertive" aria-hidden="true">
+            <div class="practice-goodjob-box">
+              <span class="practice-goodjob-stars" aria-hidden="true">✨🌟✨</span>
+              <span class="practice-goodjob-text">Good Job！</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="game-footer">
+      <div class="container">
+        <p>🍙 © 2026 Onigiri English - まずはここから！ アルファベット</p>
+      </div>
+    </footer>
+
+    <!-- 専用ロジック（ES Modules） -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

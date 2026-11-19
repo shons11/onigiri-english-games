@@ -328,7 +328,7 @@ export const PHONICS_DATA = {
         id: 'vowel-a',
         badge: 'ア系',
         title: 'ア系の母音（ʌ, ɑ, ɑː, æ, ə）',
-        note: '全5音・クリックで開閉',
+        note: '全5音',
         items: [
           {
             number: 1,
@@ -386,7 +386,7 @@ export const PHONICS_DATA = {
         id: 'vowel-i',
         badge: 'イ系',
         title: 'イ系の母音（i, iː, ɪ）',
-        note: '全3音・クリックで開閉',
+        note: '全3音',
         items: [
           {
             number: 6,
@@ -424,7 +424,7 @@ export const PHONICS_DATA = {
         id: 'vowel-u',
         badge: 'ウ系',
         title: 'ウ系の母音（ʊ, uː）',
-        note: '全2音・クリックで開閉',
+        note: '全2音',
         items: [
           {
             number: 9,
@@ -452,7 +452,7 @@ export const PHONICS_DATA = {
         id: 'vowel-e',
         badge: 'エ系',
         title: 'エ系の母音（e）',
-        note: '全1音・クリックで開閉',
+        note: '全1音',
         items: [
           {
             number: 11,
@@ -470,7 +470,7 @@ export const PHONICS_DATA = {
         id: 'vowel-o',
         badge: 'オ系',
         title: 'オ系の母音（ɔ, ɔː）',
-        note: '全2音・クリックで開閉',
+        note: '全2音',
         items: [
           {
             number: 12,
@@ -498,7 +498,7 @@ export const PHONICS_DATA = {
         id: 'vowel-r',
         badge: 'R系',
         title: 'R系の母音（ər）',
-        note: '全1音・クリックで開閉',
+        note: '全1音',
         items: [
           {
             number: 14,
@@ -516,7 +516,7 @@ export const PHONICS_DATA = {
         id: 'vowel-diphthong',
         badge: '二重母音',
         title: '二重母音（aɪ, eɪ, ɔɪ, aʊ, oʊ, ɪər, ʊər, eər）',
-        note: '全8音・クリックで開閉',
+        note: '全8音',
         items: [
           {
             number: 15,
@@ -744,7 +744,7 @@ function getNextVoiceSettings(hasFinalConsonant = true) {
  * すべての再生中ハイライトを解除
  */
 function clearAllPlayingHighlights() {
-  document.querySelectorAll('.phonics-row-bottom.playing').forEach((el) => {
+  document.querySelectorAll('.phonics-row-bottom.playing, .examples-play-badge.playing').forEach((el) => {
     el.classList.remove('playing');
   });
   document.querySelectorAll('.example-word-chip.speaking-now').forEach((el) => {
@@ -753,9 +753,54 @@ function clearAllPlayingHighlights() {
 }
 
 /**
- * 2段目クリック時：3つの単語例を連続で再生（クリックごとに男女交互）
+ * 各単語チップクリック時：その単語1つだけを読み上げる（クリックごとに男女交互）
+ * @param {{word: string, ipa: string}} example - 単語データ
+ * @param {HTMLElement} chipElem - クリックされた単語チップボタン
+ */
+export function speakSingleExample(example, chipElem) {
+  if (!('speechSynthesis' in window) || !example) return;
+
+  activePlaybackSessionId += 1;
+  const sessionId = activePlaybackSessionId;
+
+  window.speechSynthesis.cancel();
+  clearAllPlayingHighlights();
+
+  const hasFinalConsonant = endsWithConsonantSound(example.word, example.ipa);
+  const voiceSettings = getNextVoiceSettings(hasFinalConsonant);
+  const formattedWord = formatForClearArticulation(example.word, hasFinalConsonant);
+
+  if (chipElem) {
+    chipElem.classList.add('speaking-now');
+  }
+
+  const utterance = new SpeechSynthesisUtterance(formattedWord);
+  utterance.lang = (voiceSettings.voice && voiceSettings.voice.lang) ? voiceSettings.voice.lang : 'en-US';
+  utterance.rate = voiceSettings.rate;
+  utterance.pitch = voiceSettings.pitch;
+  utterance.volume = 1.0;
+
+  if (voiceSettings.voice) {
+    utterance.voice = voiceSettings.voice;
+  }
+
+  const cleanup = () => {
+    if (sessionId === activePlaybackSessionId && chipElem) {
+      chipElem.classList.remove('speaking-now');
+    }
+  };
+
+  utterance.onend = cleanup;
+  utterance.onerror = cleanup;
+  setTimeout(cleanup, 2400);
+
+  window.speechSynthesis.speak(utterance);
+}
+
+/**
+ * 「3単語連続できく」ボタンクリック時：3つの単語例を連続で再生（クリックごとに男女交互）
  * @param {Array<{word: string, ipa: string}>} examples - 3つの単語リスト
- * @param {HTMLElement} rowBottomElem - 2段目のボタン要素
+ * @param {HTMLElement} rowBottomElem - 2段目のコンテナ要素
  * @param {HTMLElement[]} chipElems - 各単語チップ要素の配列
  */
 export function speakThreeExamples(examples, rowBottomElem, chipElems = []) {
@@ -921,7 +966,7 @@ export function renderPhonicsCategory(categoryKey) {
           </div>
           <div class="phonics-guide-box">
             <div class="phonics-guide-header">
-              <span class="phonics-guide-label">👄 口のつくりかた・発音のコツ</span>
+              <span class="phonics-guide-label">👄 発音のコツ</span>
               ${voiceTypeBadgeHtml}
             </div>
             <p class="phonics-guide-text">${item.guide}</p>
@@ -929,47 +974,54 @@ export function renderPhonicsCategory(categoryKey) {
         </div>
       `;
 
-      // 2段目：その音が入る簡単な単語3つの例（クリックすると3単語連続で音声が流れる）
-      const rowBottom = document.createElement('button');
-      rowBottom.type = 'button';
+      // 2段目：その音が入る簡単な単語3つの例（各単語クリックで単一再生 / 右側ボタンで3単語連続再生）
+      const rowBottom = document.createElement('div');
       rowBottom.className = 'phonics-row-bottom';
-      const exampleWordsLabel = item.examples.map((ex) => ex.word).join(', ');
-      rowBottom.setAttribute('aria-label', `単語例 ${exampleWordsLabel} を3つ連続で再生する`);
 
       const examplesLeft = document.createElement('div');
       examplesLeft.className = 'examples-left-wrap';
-      examplesLeft.innerHTML = `<span class="examples-label">📝 たんご例（3つ連続再生）：</span>`;
+      examplesLeft.innerHTML = `<span class="examples-label">📝 たんご例：</span>`;
 
       const wordsListEl = document.createElement('div');
       wordsListEl.className = 'examples-words-list';
 
       const chipElements = [];
       item.examples.forEach((ex) => {
-        const chip = document.createElement('span');
+        const chip = document.createElement('button');
+        chip.type = 'button';
         chip.className = 'example-word-chip';
+        chip.setAttribute('aria-label', `${ex.word}（${ex.ja}）の発音をきく`);
         const formattedIpa = ex.ipaHtml || ex.ipa;
         chip.innerHTML = `
+          <span class="chip-sound-icon" aria-hidden="true">🔊</span>
           <span class="example-word-en">${ex.html}</span>
           <span class="example-word-ipa">/${formattedIpa}/</span>
           <span class="example-word-ja">（${ex.ja}）</span>
         `;
+        chip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          speakSingleExample(ex, chip);
+        });
         chipElements.push(chip);
         wordsListEl.appendChild(chip);
       });
 
       examplesLeft.appendChild(wordsListEl);
 
-      const playBadge = document.createElement('span');
+      const exampleWordsLabel = item.examples.map((ex) => ex.word).join(', ');
+      const playBadge = document.createElement('button');
+      playBadge.type = 'button';
       playBadge.className = 'examples-play-badge';
-      playBadge.setAttribute('aria-hidden', 'true');
-      playBadge.innerHTML = `<span>🔊</span><span>3単語連続できく</span>`;
+      playBadge.setAttribute('aria-label', `単語例 ${exampleWordsLabel} を3単語連続できく`);
+      playBadge.innerHTML = `<span aria-hidden="true">🔊</span><span>3単語連続できく</span>`;
+
+      playBadge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        speakThreeExamples(item.examples, rowBottom, chipElements);
+      });
 
       rowBottom.appendChild(examplesLeft);
       rowBottom.appendChild(playBadge);
-
-      rowBottom.addEventListener('click', () => {
-        speakThreeExamples(item.examples, rowBottom, chipElements);
-      });
 
       card.appendChild(rowTop);
       card.appendChild(rowBottom);
@@ -1035,6 +1087,120 @@ export function initSpeedStageButtons() {
 }
 
 /**
+ * 解説動画リストデータ（Day4〜Day8）
+ */
+export const PHONICS_VIDEO_LIST = [
+  {
+    id: 'x6VIqq4DNxY',
+    badge: 'Day 4',
+    title: '【Onigiri English】Day4 発音勉強の準備体操',
+    desc: '発音練習をはじめる前に知っておきたい基本と準備体操！',
+    url: 'https://youtu.be/x6VIqq4DNxY?si=4iTGM7D9iaFd7pyJ',
+    thumb: 'https://i.ytimg.com/vi/x6VIqq4DNxY/hqdefault.jpg'
+  },
+  {
+    id: 'H3xJYEl0WNk',
+    badge: 'Day 5',
+    title: '【Onigiri English】Day5 発音：母音編',
+    desc: 'ア〜オ系・R系・二重母音の口のつくりかたと発音を動画で解説！',
+    url: 'https://youtu.be/H3xJYEl0WNk?si=0K7W7IEvR75IPuDB',
+    thumb: 'https://i.ytimg.com/vi/H3xJYEl0WNk/hqdefault.jpg'
+  },
+  {
+    id: 'MnvA3FTcTNE',
+    badge: 'Day 6',
+    title: '【Onigiri English】Day6 発音：子音編',
+    desc: '有声音・無声音の違いと全24個の子音の出し方をわかりやすく解説！',
+    url: 'https://youtu.be/MnvA3FTcTNE?si=4BAlXzLXylOGYFnl',
+    thumb: 'https://i.ytimg.com/vi/MnvA3FTcTNE/hqdefault.jpg'
+  },
+  {
+    id: 'tjawIPRfY-4',
+    badge: 'Day 7',
+    title: '【Onigiri English】Day7 発音：練習あるのみ',
+    desc: '覚えた母音・子音を使って実践的に発音トレーニング！',
+    url: 'https://youtu.be/tjawIPRfY-4?si=YcQetuATLms3fcDd',
+    thumb: 'https://i.ytimg.com/vi/tjawIPRfY-4/hqdefault.jpg'
+  },
+  {
+    id: 'GMj1guI9Epc',
+    badge: 'Day 8',
+    title: '【Onigiri English】Day8 発音：番外編、英語のリズムや音の変化について',
+    desc: '英語ならではのリズムや音がつながる変化を知ってさらにレベルアップ！',
+    url: 'https://youtu.be/GMj1guI9Epc?si=4VOArT61e6WuRdDP',
+    thumb: 'https://i.ytimg.com/vi/GMj1guI9Epc/hqdefault.jpg'
+  }
+];
+
+/**
+ * 「動画のせつめいをチェック！」モーダルの初期化と開閉制御
+ */
+export function initVideoModal() {
+  const openBtn = document.getElementById('openVideoModalBtn');
+  const modal = document.getElementById('videoListModal');
+  const closeIconBtn = document.getElementById('closeVideoModalBtn');
+  const closeFooterBtn = document.getElementById('closeVideoModalFooterBtn');
+  const listContainer = document.getElementById('videoModalList');
+
+  if (!openBtn || !modal || !listContainer) return;
+
+  listContainer.innerHTML = '';
+  PHONICS_VIDEO_LIST.forEach((video) => {
+    const link = document.createElement('a');
+    link.href = video.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'video-list-item';
+    link.setAttribute('aria-label', `${video.title} を YouTube で開く`);
+
+    link.innerHTML = `
+      <div class="video-item-left">
+        <div class="video-thumb-wrap">
+          <img src="${video.thumb}" alt="" class="video-thumb-img" loading="lazy" />
+        </div>
+        <div class="video-item-info">
+          <span class="video-item-badge">${video.badge}</span>
+          <span class="video-item-title">${video.title}</span>
+          <span class="video-item-desc">${video.desc}</span>
+        </div>
+      </div>
+      <span class="video-item-action" aria-hidden="true">
+        <span>▶️</span>
+        <span>動画を見る</span>
+      </span>
+    `;
+    listContainer.appendChild(link);
+  });
+
+  const openModal = () => {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('video-modal-open');
+    if (closeIconBtn) closeIconBtn.focus();
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('video-modal-open');
+  };
+
+  openBtn.addEventListener('click', openModal);
+  if (closeIconBtn) closeIconBtn.addEventListener('click', closeModal);
+  if (closeFooterBtn) closeFooterBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
+
+/**
  * フォニックスドリル画面全体の初期化
  */
 export function initPhonicsDrill() {
@@ -1047,6 +1213,7 @@ export function initPhonicsDrill() {
 
   initCategoryButtons();
   initSpeedStageButtons();
+  initVideoModal();
   renderPhonicsCategory(currentCategoryKey);
 }
 
