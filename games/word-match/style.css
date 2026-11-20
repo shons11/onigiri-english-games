@@ -216,6 +216,10 @@ body {
   transform: scale(1.1) rotate(-4deg);
 }
 
+.types-icon-box {
+  background-color: #FEF3C7;
+}
+
 .dict-icon-box {
   background-color: #FFE8D6;
 }
@@ -263,6 +267,195 @@ body {
 .tag-coming-soon {
   background-color: #FEF3C7;
   color: #B45309;
+}
+
+/* ==========================================================================
+   ことばの種類（品詞の役割）学習エリア (Word Types Area)
+   ========================================================================== */
+.word-types-area {
+  background-color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.word-types-area.hidden {
+  display: none;
+}
+
+.types-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 2px dashed #E2E8F0;
+}
+
+.types-title-box {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.types-header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background-color: #FEF3C7;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  flex-shrink: 0;
+}
+
+.types-main-title {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--color-nori);
+}
+
+.types-sub-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.word-types-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.word-type-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  background-color: #FFFDF9;
+  border: 2px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.word-type-card:hover {
+  border-color: #FDBA74;
+  background-color: #FFFBEB;
+  box-shadow: 0 8px 18px rgba(245, 158, 11, 0.1);
+}
+
+.word-type-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.word-type-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.word-type-num-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-nori);
+  color: #FFFFFF;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.word-type-emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.word-type-name {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--color-nori);
+}
+
+.word-type-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-orange-light);
+  border: 1.5px solid #FDBA74;
+  color: #C2410C;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.word-type-jump-btn:hover {
+  background-color: var(--color-orange);
+  border-color: var(--color-orange);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.word-type-desc {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  line-height: 1.65;
+  background-color: #FFFFFF;
+  border-left: 4px solid var(--color-orange);
+  padding: 0.75rem 1rem;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.word-type-examples-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.word-type-examples-label {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--color-text-muted);
+}
+
+.word-type-example-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background-color: #EFF6FF;
+  border: 1.5px solid #BFDBFE;
+  color: #1E40AF;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+
+.word-type-example-en {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  color: var(--color-blue);
 }
 
 /* ==========================================================================

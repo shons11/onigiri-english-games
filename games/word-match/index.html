@@ -43,7 +43,27 @@
         <!-- サブゲーム選択メニュー -->
         <section class="mode-selection-section" aria-label="サブゲーム選択">
           <div class="mode-grid">
-            <!-- カード1: 英単語じてん -->
+            <!-- カード1: ことばの種類（左に新設） -->
+            <button
+              id="wordTypesModeCard"
+              class="mode-card"
+              type="button"
+              aria-expanded="false"
+              aria-controls="wordTypesArea"
+            >
+              <div class="mode-icon-box types-icon-box" aria-hidden="true">
+                🧩
+              </div>
+              <div class="mode-content">
+                <div class="mode-title-row">
+                  <h3 class="mode-title">ことばの種類</h3>
+                  <span class="mode-tag tag-ready">まなべるよ</span>
+                </div>
+                <p class="mode-desc">文のなかで ことばがどんな役割をするか べんきょうしよう！</p>
+              </div>
+            </button>
+
+            <!-- カード2: 英単語じてん（図鑑） -->
             <button 
               id="dictModeCard" 
               class="mode-card active" 
@@ -59,11 +79,11 @@
                   <h3 class="mode-title">英単語じてん（図鑑）</h3>
                   <span class="mode-tag tag-ready">あそべるよ</span>
                 </div>
-                <p class="mode-desc">カテゴリごとの単語と発音をチェック！</p>
+                <p class="mode-desc">ことばの種類（品詞）ごとの単語と発音をチェック！</p>
               </div>
             </button>
 
-            <!-- カード2: 単語クイズ（準備中） -->
+            <!-- カード3: 単語クイズ（準備中） -->
             <button 
               id="quizModeCard" 
               class="mode-card" 
@@ -84,12 +104,32 @@
           </div>
         </section>
 
+        <!-- ことばの種類（品詞の役割）学習エリア -->
+        <section id="wordTypesArea" class="word-types-area hidden" aria-label="ことばの種類エリア">
+          <div class="types-header-row">
+            <div class="types-title-box">
+              <span aria-hidden="true" class="types-header-icon">🧩</span>
+              <div>
+                <h3 class="types-main-title">ことばの種類（10個の品詞のやくわり）</h3>
+                <p class="types-sub-title">
+                  英語というカードゲームの10種類の手札（品詞）！それぞれの役割をふんわりつかもう！
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ことばの種類リスト（JSで動的生成） -->
+          <div id="wordTypesListContainer" class="word-types-list-container" role="list">
+            <!-- JSで各品詞の解説カードを生成 -->
+          </div>
+        </section>
+
         <!-- 単語辞書エリア -->
         <section id="dictionaryArea" class="dictionary-area" aria-label="英単語じてんエリア">
           <div class="dict-header-row">
             <div class="dict-title-box">
               <span aria-hidden="true" style="font-size: 1.5rem;">📖</span>
-              <h3 id="currentGroupName">名前の代わりの言葉</h3>
+              <h3 id="currentGroupName">モノ・コトの名前（名詞）</h3>
             </div>
             <div class="dict-tip-group">
               <div class="speed-control-wrapper">
@@ -109,22 +149,22 @@
             </div>
           </div>
 
-          <!-- グループ切替タブ（メインカテゴリ） -->
+          <!-- グループ切替タブ（ことばの種類ごとのメインタブ） -->
           <div 
             id="groupTabsContainer" 
             class="group-tabs-container" 
             role="tablist" 
-            aria-label="単語カテゴリ"
+            aria-label="ことばの種類タブ"
           >
             <!-- JSで動的にボタン生成 -->
           </div>
 
-          <!-- サブカテゴリ切替タブ（モノ・コトの名前選択時のみ表示） -->
+          <!-- サブカテゴリ切替タブ（モノ・コトの名前（名詞）選択時のみ表示） -->
           <div 
             id="subGroupTabsContainer" 
             class="sub-group-tabs-container hidden" 
             role="tablist" 
-            aria-label="モノ・コトの名前の種類"
+            aria-label="モノ・コトの名前（名詞）の種類"
           >
             <!-- JSで動的にサブカテゴリボタン生成 -->
           </div>

@@ -7,36 +7,176 @@
  */
 
 /**
- * グループ別単語データ
+ * ことばの種類（10個の品詞の役割ガイド）データ
+ * Day11〜Day21（英語の手札 - 構成要素）の10品詞と順番・定義・例文に準拠：
+ * 1. 名詞 -> 2. 代名詞 -> 3. 限定詞 -> 4. 形容詞 -> 5. 動詞 ->
+ * 6. 副詞 -> 7. 助動詞 -> 8. 前置詞 -> 9. 接続詞 -> 10. 間投詞
+ */
+export const WORD_TYPES_GUIDE = [
+  {
+    id: 'nouns',
+    number: 1,
+    name: 'モノ・コトの名前（名詞）',
+    emoji: '🏷️',
+    roleSummary: '人・もの・状態の名前を表すことばだよ！（りんご、太郎、テニス、日本、明るさ など）',
+    kidExplanation:
+      '数えられる名詞（apple / dog / book：複数のときは後ろに s をつける）と、数えられない名詞（water / Japan / music / love）の2種類があります。文のなかで主語（～は）や目的語（～を）になる主役の手札です！',
+    examples: [
+      { en: 'apple', ja: 'りんご' },
+      { en: 'Taro', ja: '太郎' },
+      { en: 'tennis', ja: 'テニス' },
+      { en: 'Japan', ja: '日本' },
+      { en: 'water', ja: '水' }
+    ]
+  },
+  {
+    id: 'pronouns',
+    number: 2,
+    name: '名前の代わりの言葉（代名詞）',
+    emoji: '👤',
+    roleSummary: '人・ものを名前の代わりに表すことばだよ！（私、あなた、あれ、これ、だれ、みんな など）',
+    kidExplanation:
+      '名詞の友達で、毎回「太郎は…」「このペンは…」と名前を言わなくても、「私（I）」「あなた（you）」「これ（this）」「だれ（who）」「全員（everyone）」のように代わりに表せる言葉です。',
+    examples: [
+      { en: 'I', ja: 'わたし' },
+      { en: 'you', ja: 'あなた' },
+      { en: 'this / that', ja: 'これ / あれ' },
+      { en: 'who / what', ja: 'だれ / なに' }
+    ]
+  },
+  {
+    id: 'determiners',
+    number: 3,
+    name: '範囲や数を決める言葉（限定詞）',
+    emoji: '🔍',
+    roleSummary: '名詞の前に置いて「だれの？」「いくつの？」「どの？」と名詞の状態を限定することばだよ！',
+    kidExplanation:
+      '英語は名詞の前に「1つの（a / an）」「その（the）」「この（this）」「私の（my）」「たくさんの（many）」「2つの（two）」などをセットで置いて、どれ・何個かをはっきり決めるのが大好きです！',
+    examples: [
+      { en: 'a / an', ja: '1つの' },
+      { en: 'the', ja: 'その・あの' },
+      { en: 'my / your', ja: '私の / あなたの' },
+      { en: 'two / many', ja: '2つの / たくさんの' }
+    ]
+  },
+  {
+    id: 'adjectives',
+    number: 4,
+    name: 'どんな状態・性質かを表す言葉（形容詞）',
+    emoji: '✨',
+    roleSummary: '名詞の状態や性質をもっと詳しく説明する言葉だよ！（幸せ、美しい、小さい、赤い、簡単な など）',
+    kidExplanation:
+      '名詞のすぐ前に置いて「red car（赤い車）」「beautiful flower（美しい花）」と説明したり、「The car is red.（その車は赤い）」のようにイコール（A＝B）でどんな状態かを説明します。',
+    examples: [
+      { en: 'happy', ja: '幸せな' },
+      { en: 'beautiful', ja: '美しい' },
+      { en: 'small', ja: '小さい' },
+      { en: 'red', ja: '赤い' }
+    ]
+  },
+  {
+    id: 'actions',
+    number: 5,
+    name: '状態や動きを表す言葉（動詞）',
+    emoji: '🏃',
+    roleSummary: '何かの状態や気持ち、動作を表す、文のなかで一番たいせつな言葉だよ！（～である、走る、好き、学ぶ、遊ぶ など）',
+    kidExplanation:
+      '「I am happy.（私は幸せだ）」のように状態・存在（A＝B、いる）を表す特殊な「be動詞（am / is / are / was / were）」と、動作や気持ちを表す「一般動詞（run / like / play / eat）」の2つに分けられます。',
+    examples: [
+      { en: 'am / is / are', ja: '～だ・いる（be動詞）' },
+      { en: 'run', ja: '走る' },
+      { en: 'like', ja: '好き' },
+      { en: 'play', ja: '遊ぶ・する' }
+    ]
+  },
+  {
+    id: 'adverbs',
+    number: 6,
+    name: '名詞以外をくわしくする言葉（副詞）',
+    emoji: '⚡',
+    roleSummary: '動詞や形容詞など「名詞以外」の状態をもっと詳しく説明する言葉だよ！（速く、とても、いつも、今、ここで など）',
+    kidExplanation:
+      '「どんなふうに？（fast：速く、well：上手に）」「どのくらい？（always：いつも、sometimes：時々）」「いつ・どこで？（now：今、here：ここで）」「どの程度？（very：とても）」などを付け足します。',
+    examples: [
+      { en: 'fast / slowly', ja: '速く / ゆっくり' },
+      { en: 'very', ja: 'とても' },
+      { en: 'always', ja: 'いつも' },
+      { en: 'now / here', ja: '今 / ここで' }
+    ]
+  },
+  {
+    id: 'auxiliaries',
+    number: 7,
+    name: '動詞に意味を付け加える言葉（助動詞）',
+    emoji: '🦸',
+    roleSummary: '動詞のすぐ前に置いて「～できる」「～するつもり」「～すべき」など動詞を助けて意味をプラスする言葉だよ！',
+    kidExplanation:
+      '動詞の原形とセットで使います。「can（～できる）」「will（～するつもり・だろう）」「may（～かもしれない・～してもよい）」「must（～しなければならない）」「should（～すべき）」が代表選手です！',
+    examples: [
+      { en: 'can', ja: '～できる' },
+      { en: 'will', ja: '～するつもり・だろう' },
+      { en: 'must', ja: '～しなければならない' },
+      { en: 'should', ja: '～すべき' }
+    ]
+  },
+  {
+    id: 'prepositions',
+    number: 8,
+    name: '場所・時間・方向などを示す言葉（前置詞）',
+    emoji: '📍',
+    roleSummary: '名詞の「前」に置いて、場所・時間・方向・関係などを表す言葉だよ！（中で、上で、下で、～へ、～から など）',
+    kidExplanation:
+      '日本語とは逆で、名詞の前に置きます。「in the box（箱の中に）」「on the table（机の上に）」「at 7:00（7時に）」「to school（学校へ）」「with my friend（友達と一緒に）」のように空間や時間のイメージでつなぎます。',
+    examples: [
+      { en: 'in / on / under', ja: '中で / 上で / 下で' },
+      { en: 'at', ja: '～に（場所・時刻）' },
+      { en: 'to / from', ja: '～へ / ～から' },
+      { en: 'with / about', ja: '～と一緒に / ～について' }
+    ]
+  },
+  {
+    id: 'conjunctions',
+    number: 9,
+    name: '言葉や文をつなぐ言葉（接続詞）',
+    emoji: '🔗',
+    roleSummary: '単語と単語、文と文をつなぎ合わせる接着剤の言葉だよ！（そして、しかし、もしくは、～なので、もし～なら など）',
+    kidExplanation:
+      '対等につなぐ「and（～と・そして）」「but（しかし）」「or（もしくは）」「so（だから）」や、理由・条件・時を付け足す「because（～なので）」「if（もし～なら）」「when（～するとき）」「before（～する前）」があります。',
+    examples: [
+      { en: 'and', ja: '～と・そして' },
+      { en: 'but', ja: '～だが・しかし' },
+      { en: 'because', ja: '～なので' },
+      { en: 'if / when', ja: 'もし～なら / ～するとき' }
+    ]
+  },
+  {
+    id: 'interjections',
+    number: 10,
+    name: 'とっさの感情を表す言葉（間投詞）',
+    emoji: '💬',
+    roleSummary: '「すごい！」「おっと！」「えーと、」など、文のどこかで自分のとっさの感情や相づちを入れる言葉だよ！',
+    kidExplanation:
+      'びっくりしたときや嬉しいときは後ろに「！」をつけて「Wow!（すごい！）」「Oops!（おっと！）」「Ouch!（痛っ！）」「Yay!（やったー！）」、考えながら話すときは「,」をつけて「Well,（えーと・まあ）」「Oh,（ああ）」と使います。',
+    examples: [
+      { en: 'Wow!', ja: 'ワオ！・すごい！' },
+      { en: 'Oops!', ja: 'おっと！' },
+      { en: 'Well, / Um,', ja: 'えーと、・まあ、' },
+      { en: 'Yay! / Hey!', ja: 'やったー！ / ねえ！' }
+    ]
+  }
+];
+
+/**
+ * グループ別単語データ（Day11〜Day21の10品詞順・各品詞の最後に（～詞）を付与）
  * 各アイテム: { id, japanese, english, speech, emoji, phonetic }
  * ※発音記号（phonetic）はOxford Learner's DictionariesのNorth American English (NAmE) 準拠
  */
 export const WORD_GROUPS = {
-  pronouns: {
-    id: 'pronouns',
-    name: '名前の代わりの言葉',
-    emoji: '👤',
-    description: 'ひとや ものを さすことば',
-    words: [
-      { id: 'pro_1', japanese: 'わたし', english: 'I', speech: 'I', emoji: '🙋', phonetic: '/aɪ/' },
-      { id: 'pro_2', japanese: 'わたしたち', english: 'we', speech: 'we', emoji: '👨‍👩‍👧', phonetic: '/wi/' },
-      { id: 'pro_3', japanese: 'あなた', english: 'you', speech: 'you', emoji: '👉', phonetic: '/ju/' },
-      { id: 'pro_4', japanese: 'あなたたち', english: 'you', speech: 'you', emoji: '🫵', phonetic: '/ju/' },
-      { id: 'pro_5', japanese: 'かれ', english: 'he', speech: 'he', emoji: '👦', phonetic: '/hi/' },
-      { id: 'pro_6', japanese: 'かのじょ', english: 'she', speech: 'she', emoji: '👧', phonetic: '/ʃi/' },
-      { id: 'pro_7', japanese: 'それ', english: 'it', speech: 'it', emoji: '📦', phonetic: '/ɪt/' },
-      { id: 'pro_8', japanese: 'かれら/かのじょら/それら', english: 'they', speech: 'they', emoji: '👥', phonetic: '/ðeɪ/' },
-      { id: 'pro_9', japanese: 'わたしの', english: 'my', speech: 'my', emoji: '🎒', phonetic: '/maɪ/' },
-      { id: 'pro_10', japanese: 'わたしたちの', english: 'our', speech: 'our', emoji: '🏠', phonetic: '/ˈaʊər/' },
-      { id: 'pro_11', japanese: 'あなたの', english: 'your', speech: 'your', emoji: '🧢', phonetic: '/jɔːr/' },
-      { id: 'pro_12', japanese: 'あなたたちの', english: 'your', speech: 'your', emoji: '🏫', phonetic: '/jɔːr/' },
-    ]
-  },
   nouns: {
     id: 'nouns',
-    name: 'モノ・コトの名前',
+    name: 'モノ・コトの名前（名詞）',
     emoji: '🏷️',
-    description: 'しぜんや どうぶつ、がっこうの かもくなどの なまえ',
+    description: 'ひと・もの・しぜん・どうぶつ・がっこうの かもくなどの なまえ',
     subGroups: {
       nature: {
         id: 'nature',
@@ -53,7 +193,7 @@ export const WORD_GROUPS = {
           { id: 'nat_7', japanese: 'うみ（海）', english: 'sea', speech: 'sea', emoji: '🌊', phonetic: '/siː/' },
           { id: 'nat_8', japanese: 'ほし（星）', english: 'star', speech: 'star', emoji: '⭐', phonetic: '/stɑːr/' },
           { id: 'nat_9', japanese: 'はな（花）', english: 'flower', speech: 'flower', emoji: '🌸', phonetic: '/ˈflaʊər/' },
-          { id: 'nat_10', japanese: 'き（木）', english: 'tree', speech: 'tree', emoji: '🌳', phonetic: '/triː/' },
+          { id: 'nat_10', japanese: 'き（木）', english: 'tree', speech: 'tree', emoji: '🌳', phonetic: '/triː/' }
         ]
       },
       subjects: {
@@ -69,7 +209,7 @@ export const WORD_GROUPS = {
           { id: 'sub_5', japanese: 'ずこう（図工・美術）', english: 'art', speech: 'art', emoji: '🎨', phonetic: '/ɑːrt/' },
           { id: 'sub_6', japanese: 'たいいく（体育）', english: 'PE', speech: 'P E', emoji: '⚽', phonetic: '/ˌpiː ˈiː/' },
           { id: 'sub_7', japanese: 'こくご（国語）', english: 'Japanese', speech: 'Japanese', emoji: '📖', phonetic: '/ˌdʒæpəˈniːz/' },
-          { id: 'sub_8', japanese: 'しゃかい（社会）', english: 'social studies', speech: 'social studies', emoji: '🗺️', phonetic: '/ˈsoʊʃl ˈstʌdiz/' },
+          { id: 'sub_8', japanese: 'しゃかい（社会）', english: 'social studies', speech: 'social studies', emoji: '🗺️', phonetic: '/ˈsoʊʃl ˈstʌdiz/' }
         ]
       },
       animals: {
@@ -87,33 +227,225 @@ export const WORD_GROUPS = {
           { id: 'ani_7', japanese: 'くま（熊）', english: 'bear', speech: 'bear', emoji: '🐻', phonetic: '/ber/' },
           { id: 'ani_8', japanese: 'さる（猿）', english: 'monkey', speech: 'monkey', emoji: '🐵', phonetic: '/ˈmʌŋki/' },
           { id: 'ani_9', japanese: 'とり（鳥）', english: 'bird', speech: 'bird', emoji: '🐦', phonetic: '/bɜːrd/' },
-          { id: 'ani_10', japanese: 'さかな（魚）', english: 'fish', speech: 'fish', emoji: '🐟', phonetic: '/fɪʃ/' },
+          { id: 'ani_10', japanese: 'さかな（魚）', english: 'fish', speech: 'fish', emoji: '🐟', phonetic: '/fɪʃ/' }
+        ]
+      },
+      people_places: {
+        id: 'people_places',
+        name: '人・場所',
+        emoji: '🏫',
+        description: 'かぞくや まちの ばしょ（Day12 普通・集合・固有名詞より）',
+        words: [
+          { id: 'pp_1', japanese: 'おとうさん（父）', english: 'father', speech: 'father', emoji: '👨', phonetic: '/ˈfɑːðər/' },
+          { id: 'pp_2', japanese: 'おかあさん（母）', english: 'mother', speech: 'mother', emoji: '👩', phonetic: '/ˈmʌðər/' },
+          { id: 'pp_3', japanese: 'せんせい（先生）', english: 'teacher', speech: 'teacher', emoji: '🧑‍🏫', phonetic: '/ˈtiːtʃər/' },
+          { id: 'pp_4', japanese: 'ともだち（友達）', english: 'friend', speech: 'friend', emoji: '🤝', phonetic: '/frend/' },
+          { id: 'pp_5', japanese: 'かぞく（家族）', english: 'family', speech: 'family', emoji: '👨‍👩‍👧‍👦', phonetic: '/ˈfæməli/' },
+          { id: 'pp_6', japanese: 'がっこう（学校）', english: 'school', speech: 'school', emoji: '🏫', phonetic: '/skuːl/' },
+          { id: 'pp_7', japanese: 'こうえん（公園）', english: 'park', speech: 'park', emoji: '⛲', phonetic: '/pɑːrk/' },
+          { id: 'pp_8', japanese: 'としょかん（図書館）', english: 'library', speech: 'library', emoji: '🏛️', phonetic: '/ˈlaɪbreri/' },
+          { id: 'pp_9', japanese: 'えき（駅）', english: 'station', speech: 'station', emoji: '🚉', phonetic: '/ˈsteɪʃn/' },
+          { id: 'pp_10', japanese: 'にほん（日本）', english: 'Japan', speech: 'Japan', emoji: '🗾', phonetic: '/dʒəˈpæn/' }
+        ]
+      },
+      food_things: {
+        id: 'food_things',
+        name: '食べ物・身の回り',
+        emoji: '🍙',
+        description: 'たべものや まいにち つかうモノ（Day12 普通・物質・抽象名詞より）',
+        words: [
+          { id: 'ft_1', japanese: 'りんご', english: 'apple', speech: 'apple', emoji: '🍎', phonetic: '/ˈæpl/' },
+          { id: 'ft_2', japanese: 'コメ・ごはん', english: 'rice', speech: 'rice', emoji: '🍚', phonetic: '/raɪs/' },
+          { id: 'ft_3', japanese: 'パン', english: 'bread', speech: 'bread', emoji: '🍞', phonetic: '/bred/' },
+          { id: 'ft_4', japanese: 'みず（水）', english: 'water', speech: 'water', emoji: '💧', phonetic: '/ˈwɔːtər/' },
+          { id: 'ft_5', japanese: 'ぎゅうにゅう（牛乳）', english: 'milk', speech: 'milk', emoji: '🥛', phonetic: '/mɪlk/' },
+          { id: 'ft_6', japanese: 'ほん（本）', english: 'book', speech: 'book', emoji: '📕', phonetic: '/bʊk/' },
+          { id: 'ft_7', japanese: 'えんぴつ（鉛筆）', english: 'pencil', speech: 'pencil', emoji: '✏️', phonetic: '/ˈpensl/' },
+          { id: 'ft_8', japanese: 'つくえ（テーブル）', english: 'table', speech: 'table', emoji: '🪑', phonetic: '/ˈteɪbl/' },
+          { id: 'ft_9', japanese: 'じかん（時間）', english: 'time', speech: 'time', emoji: '⏰', phonetic: '/taɪm/' },
+          { id: 'ft_10', japanese: 'ゆめ（夢）', english: 'dream', speech: 'dream', emoji: '💭', phonetic: '/driːm/' }
         ]
       }
     }
   },
+  pronouns: {
+    id: 'pronouns',
+    name: '名前の代わりの言葉（代名詞）',
+    emoji: '👤',
+    description: 'ひとや ものを なまえの かわりに さすことば（Day13 代名詞より）',
+    words: [
+      { id: 'pro_1', japanese: 'わたし', english: 'I', speech: 'I', emoji: '🙋', phonetic: '/aɪ/' },
+      { id: 'pro_2', japanese: 'わたしたち', english: 'we', speech: 'we', emoji: '👨‍👩‍👧', phonetic: '/wi/' },
+      { id: 'pro_3', japanese: 'あなた', english: 'you', speech: 'you', emoji: '👉', phonetic: '/ju/' },
+      { id: 'pro_4', japanese: 'あなたたち', english: 'you', speech: 'you', emoji: '🫵', phonetic: '/ju/' },
+      { id: 'pro_5', japanese: 'かれ', english: 'he', speech: 'he', emoji: '👦', phonetic: '/hi/' },
+      { id: 'pro_6', japanese: 'かのじょ', english: 'she', speech: 'she', emoji: '👧', phonetic: '/ʃi/' },
+      { id: 'pro_7', japanese: 'それ', english: 'it', speech: 'it', emoji: '📦', phonetic: '/ɪt/' },
+      { id: 'pro_8', japanese: 'かれら/かのじょら/それら', english: 'they', speech: 'they', emoji: '👥', phonetic: '/ðeɪ/' },
+      { id: 'pro_9', japanese: 'これ', english: 'this', speech: 'this', emoji: '👇', phonetic: '/ðɪs/' },
+      { id: 'pro_10', japanese: 'これら', english: 'these', speech: 'these', emoji: '👐', phonetic: '/ðiːz/' },
+      { id: 'pro_11', japanese: 'あれ', english: 'that', speech: 'that', emoji: '☝️', phonetic: '/ðæt/' },
+      { id: 'pro_12', japanese: 'あれら', english: 'those', speech: 'those', emoji: '🙌', phonetic: '/ðoʊz/' },
+      { id: 'pro_13', japanese: 'だれ', english: 'who', speech: 'who', emoji: '❓', phonetic: '/huː/' },
+      { id: 'pro_14', japanese: 'なに（何）', english: 'what', speech: 'what', emoji: '❔', phonetic: '/wʌt/' },
+      { id: 'pro_15', japanese: 'みんな（全員）', english: 'everyone', speech: 'everyone', emoji: '🌏', phonetic: '/ˈevriwʌn/' },
+      { id: 'pro_16', japanese: 'なにか（何か）', english: 'something', speech: 'something', emoji: '🎁', phonetic: '/ˈsʌmθɪŋ/' }
+    ]
+  },
+  determiners: {
+    id: 'determiners',
+    name: '範囲や数を決める言葉（限定詞）',
+    emoji: '🔍',
+    description: '名詞のまえにつけて「だれの・いくつの・どの」を決めることば（Day14 限定詞より）',
+    words: [
+      { id: 'det_1', japanese: '1つの～（子音の前）', english: 'a', speech: 'a', emoji: '1️⃣', phonetic: '/ə/' },
+      { id: 'det_2', japanese: '1つの～（母音の前）', english: 'an', speech: 'an', emoji: '🍎', phonetic: '/æn/' },
+      { id: 'det_3', japanese: 'その～・あの～（特定のもの）', english: 'the', speech: 'the', emoji: '⭐', phonetic: '/ðə/' },
+      { id: 'det_4', japanese: 'わたしの～', english: 'my', speech: 'my', emoji: '🎒', phonetic: '/maɪ/' },
+      { id: 'det_5', japanese: 'わたしたちの～', english: 'our', speech: 'our', emoji: '🏠', phonetic: '/ˈaʊər/' },
+      { id: 'det_6', japanese: 'あなたの～', english: 'your', speech: 'your', emoji: '🧢', phonetic: '/jɔːr/' },
+      { id: 'det_7', japanese: 'あなたたちの～', english: 'your', speech: 'your', emoji: '🏫', phonetic: '/jɔːr/' },
+      { id: 'det_8', japanese: 'かれの～', english: 'his', speech: 'his', emoji: '👦', phonetic: '/hɪz/' },
+      { id: 'det_9', japanese: 'かのじょの～', english: 'her', speech: 'her', emoji: '👧', phonetic: '/hɜːr/' },
+      { id: 'det_10', japanese: 'かれらの・それらの～', english: 'their', speech: 'their', emoji: '👥', phonetic: '/ðer/' },
+      { id: 'det_11', japanese: 'いくつかの～', english: 'some', speech: 'some', emoji: '🍪', phonetic: '/sʌm/' },
+      { id: 'det_12', japanese: 'たくさんの～（数えられる）', english: 'many', speech: 'many', emoji: '📚', phonetic: '/ˈmeni/' }
+    ]
+  },
+  adjectives: {
+    id: 'adjectives',
+    name: 'どんな状態・性質かを表す言葉（形容詞）',
+    emoji: '✨',
+    description: '名詞のようすや せいしつ、いろ・おおきさを 説明する言葉（Day15 形容詞より）',
+    words: [
+      { id: 'adj_1', japanese: 'おおきい（大きい）', english: 'big', speech: 'big', emoji: '🐘', phonetic: '/bɪɡ/' },
+      { id: 'adj_2', japanese: 'ちいさい（小さい）', english: 'small', speech: 'small', emoji: '🐭', phonetic: '/smɔːl/' },
+      { id: 'adj_3', japanese: 'よい・すてきな', english: 'good', speech: 'good', emoji: '👍', phonetic: '/ɡʊd/' },
+      { id: 'adj_4', japanese: 'うれしい・幸せな', english: 'happy', speech: 'happy', emoji: '😄', phonetic: '/ˈhæpi/' },
+      { id: 'adj_5', japanese: 'うつくしい（美しい）', english: 'beautiful', speech: 'beautiful', emoji: '💐', phonetic: '/ˈbjuːtɪfl/' },
+      { id: 'adj_6', japanese: 'あかい（赤い）', english: 'red', speech: 'red', emoji: '🔴', phonetic: '/red/' },
+      { id: 'adj_7', japanese: 'あたらしい（新しい）', english: 'new', speech: 'new', emoji: '✨', phonetic: '/nuː/' },
+      { id: 'adj_8', japanese: 'ふるい（古い）', english: 'old', speech: 'old', emoji: '🕰️', phonetic: '/oʊld/' },
+      { id: 'adj_9', japanese: 'あつい（暑い・熱い）', english: 'hot', speech: 'hot', emoji: '🥵', phonetic: '/hɑːt/' },
+      { id: 'adj_10', japanese: 'さむい・つめたい', english: 'cold', speech: 'cold', emoji: '🥶', phonetic: '/koʊld/' },
+      { id: 'adj_11', japanese: 'かわいい', english: 'cute', speech: 'cute', emoji: '🎀', phonetic: '/kjuːt/' },
+      { id: 'adj_12', japanese: 'やさしい・親切な', english: 'kind', speech: 'kind', emoji: '💝', phonetic: '/kaɪnd/' }
+    ]
+  },
   actions: {
     id: 'actions',
-    name: '動きを表す言葉（日常の動作）',
+    name: '状態や動きを表す言葉（動詞）',
     emoji: '🏃',
-    description: 'まいにちの うごきや どうさ',
+    description: '状態（be動詞）や きもち、まいにちの動作を表す言葉（Day16 動詞より）',
     words: [
+      { id: 'act_0a', japanese: '～だ・いる（わたし I のとき）', english: 'am', speech: 'am', emoji: '🙋', phonetic: '/æm/' },
+      { id: 'act_0b', japanese: '～だ・いる（かれ・それ 1つのとき）', english: 'is', speech: 'is', emoji: '☝️', phonetic: '/ɪz/' },
+      { id: 'act_0c', japanese: '～だ・いる（あなた・複数のとき）', english: 'are', speech: 'are', emoji: '👥', phonetic: '/ɑːr/' },
+      { id: 'act_0d', japanese: 'すき（好き）', english: 'like', speech: 'like', emoji: '❤️', phonetic: '/laɪk/' },
       { id: 'act_1', japanese: 'はしる（走る）', english: 'run', speech: 'run', emoji: '🏃', phonetic: '/rʌn/' },
       { id: 'act_2', japanese: 'あるく（歩く）', english: 'walk', speech: 'walk', emoji: '🚶', phonetic: '/wɔːk/' },
       { id: 'act_3', japanese: 'たべる（食べる）', english: 'eat', speech: 'eat', emoji: '🍙', phonetic: '/iːt/' },
       { id: 'act_4', japanese: 'のむ（飲む）', english: 'drink', speech: 'drink', emoji: '🥤', phonetic: '/drɪŋk/' },
       { id: 'act_5', japanese: 'ねる（眠る）', english: 'sleep', speech: 'sleep', emoji: '💤', phonetic: '/sliːp/' },
       { id: 'act_6', japanese: 'べんきょうする', english: 'study', speech: 'study', emoji: '✏️', phonetic: '/ˈstʌdi/' },
-      { id: 'act_7', japanese: 'あそぶ（遊ぶ）', english: 'play', speech: 'play', emoji: '🎮', phonetic: '/pleɪ/' },
+      { id: 'act_7', japanese: 'あそぶ・スポーツをする', english: 'play', speech: 'play', emoji: '🎮', phonetic: '/pleɪ/' },
       { id: 'act_8', japanese: 'よむ（読む）', english: 'read', speech: 'read', emoji: '📖', phonetic: '/riːd/' },
       { id: 'act_9', japanese: 'かく（書く）', english: 'write', speech: 'write', emoji: '✍️', phonetic: '/raɪt/' },
-      { id: 'act_10', japanese: 'わらう（笑う）', english: 'smile', speech: 'smile', emoji: '😊', phonetic: '/smaɪl/' },
+      { id: 'act_10', japanese: 'わらう（笑う）', english: 'smile', speech: 'smile', emoji: '😊', phonetic: '/smaɪl/' }
+    ]
+  },
+  adverbs: {
+    id: 'adverbs',
+    name: '名詞以外をくわしくする言葉（副詞）',
+    emoji: '⚡',
+    description: 'うごきの様子・頻度・時・場所・程度をくわしくする言葉（Day17 副詞より）',
+    words: [
+      { id: 'adv_1', japanese: 'はやく（速く）', english: 'fast', speech: 'fast', emoji: '💨', phonetic: '/fæst/' },
+      { id: 'adv_2', japanese: 'ゆっくりと', english: 'slowly', speech: 'slowly', emoji: '🐢', phonetic: '/ˈsloʊli/' },
+      { id: 'adv_3', japanese: 'じょうずに（よく）', english: 'well', speech: 'well', emoji: '👏', phonetic: '/wel/' },
+      { id: 'adv_4', japanese: 'とても', english: 'very', speech: 'very', emoji: '🌟', phonetic: '/ˈveri/' },
+      { id: 'adv_5', japanese: 'いつも', english: 'always', speech: 'always', emoji: '🔁', phonetic: '/ˈɔːlweɪz/' },
+      { id: 'adv_6', japanese: 'たいてい（普段は）', english: 'usually', speech: 'usually', emoji: '📅', phonetic: '/ˈjuːʒuəli/' },
+      { id: 'adv_7', japanese: 'ときどき', english: 'sometimes', speech: 'sometimes', emoji: '🌤️', phonetic: '/ˈsʌmtaɪmz/' },
+      { id: 'adv_8', japanese: 'いちども～ない', english: 'never', speech: 'never', emoji: '🚫', phonetic: '/ˈnevər/' },
+      { id: 'adv_9', japanese: 'いま（今）', english: 'now', speech: 'now', emoji: '⏰', phonetic: '/naʊ/' },
+      { id: 'adv_10', japanese: 'ここで（ここに）', english: 'here', speech: 'here', emoji: '📍', phonetic: '/hɪr/' },
+      { id: 'adv_11', japanese: 'いっしょに', english: 'together', speech: 'together', emoji: '🤝', phonetic: '/təˈɡeðər/' }
+    ]
+  },
+  auxiliaries: {
+    id: 'auxiliaries',
+    name: '動詞に意味を付け加える言葉（助動詞）',
+    emoji: '🦸',
+    description: '動詞のまえにおいて「できる・つもり・すべき」を足す言葉（Day18 助動詞より）',
+    words: [
+      { id: 'aux_1', japanese: '～できる', english: 'can', speech: 'can', emoji: '💪', phonetic: '/kæn/' },
+      { id: 'aux_2', japanese: '～できた・～できますか（丁寧）', english: 'could', speech: 'could', emoji: '✨', phonetic: '/kʊd/' },
+      { id: 'aux_3', japanese: '～するつもり・～だろう', english: 'will', speech: 'will', emoji: '🚀', phonetic: '/wɪl/' },
+      { id: 'aux_4', japanese: '～だろう（過去）・～くれませんか', english: 'would', speech: 'would', emoji: '🎩', phonetic: '/wʊd/' },
+      { id: 'aux_5', japanese: '～かもしれない・～してもよい', english: 'may', speech: 'may', emoji: '🍀', phonetic: '/meɪ/' },
+      { id: 'aux_6', japanese: '～かもしれない（弱めの推測）', english: 'might', speech: 'might', emoji: '💭', phonetic: '/maɪt/' },
+      { id: 'aux_7', japanese: '～しなければならない・～に違いない', english: 'must', speech: 'must', emoji: '🔥', phonetic: '/mʌst/' },
+      { id: 'aux_8', japanese: '～すべきだ', english: 'should', speech: 'should', emoji: '💡', phonetic: '/ʃʊd/' },
+      { id: 'aux_9', japanese: '～しましょうか？', english: 'shall', speech: 'shall', emoji: '🤝', phonetic: '/ʃæl/' }
+    ]
+  },
+  prepositions: {
+    id: 'prepositions',
+    name: '場所・時間・方向などを示す言葉（前置詞）',
+    emoji: '📍',
+    description: '名詞のまえにおいて 場所・方向・時間・関係を示す言葉（Day19 前置詞より）',
+    words: [
+      { id: 'prep_1', japanese: '～に（特定の場所・時刻）', english: 'at', speech: 'at', emoji: '🎯', phonetic: '/æt/' },
+      { id: 'prep_2', japanese: '～のうえに・曜日や日付に', english: 'on', speech: 'on', emoji: '📕', phonetic: '/ɑːn/' },
+      { id: 'prep_3', japanese: '～のなかに・月や季節に', english: 'in', speech: 'in', emoji: '📦', phonetic: '/ɪn/' },
+      { id: 'prep_4', japanese: '～のしたに', english: 'under', speech: 'under', emoji: '⬇️', phonetic: '/ˈʌndər/' },
+      { id: 'prep_5', japanese: '～の横に・～のそばに', english: 'by', speech: 'by', emoji: '↔️', phonetic: '/baɪ/' },
+      { id: 'prep_6', japanese: '～へ（目的地に向かって）', english: 'to', speech: 'to', emoji: '➡️', phonetic: '/tuː/' },
+      { id: 'prep_7', japanese: '～から（出発点・出身）', english: 'from', speech: 'from', emoji: '🛫', phonetic: '/frʌm/' },
+      { id: 'prep_8', japanese: '～のために・～の間（期間）', english: 'for', speech: 'for', emoji: '🎁', phonetic: '/fɔːr/' },
+      { id: 'prep_9', japanese: '～といっしょに', english: 'with', speech: 'with', emoji: '👫', phonetic: '/wɪð/' },
+      { id: 'prep_10', japanese: '～について', english: 'about', speech: 'about', emoji: '💬', phonetic: '/əˈbaʊt/' },
+      { id: 'prep_11', japanese: '～の前に', english: 'before', speech: 'before', emoji: '⏪', phonetic: '/bɪˈfɔːr/' },
+      { id: 'prep_12', japanese: '～の後に', english: 'after', speech: 'after', emoji: '⏩', phonetic: '/ˈæftər/' }
+    ]
+  },
+  conjunctions: {
+    id: 'conjunctions',
+    name: '言葉や文をつなぐ言葉（接続詞）',
+    emoji: '🔗',
+    description: '単語と単語、文と文をつなぎ合わせる言葉（Day20 接続詞より）',
+    words: [
+      { id: 'conj_1', japanese: '～と… ／ そして', english: 'and', speech: 'and', emoji: '➕', phonetic: '/ænd/' },
+      { id: 'conj_2', japanese: '～だが、しかし', english: 'but', speech: 'but', emoji: '⚡', phonetic: '/bʌt/' },
+      { id: 'conj_3', japanese: '～もしくは（または）', english: 'or', speech: 'or', emoji: '⚖️', phonetic: '/ɔːr/' },
+      { id: 'conj_4', japanese: '～だから（そこで）', english: 'so', speech: 'so', emoji: '👉', phonetic: '/soʊ/' },
+      { id: 'conj_5', japanese: 'なぜなら～なので', english: 'because', speech: 'because', emoji: '💡', phonetic: '/bɪˈkɔːz/' },
+      { id: 'conj_6', japanese: 'もし～なら', english: 'if', speech: 'if', emoji: '🌱', phonetic: '/ɪf/' },
+      { id: 'conj_7', japanese: '～するとき', english: 'when', speech: 'when', emoji: '⏱️', phonetic: '/wen/' },
+      { id: 'conj_8', japanese: '～する前に', english: 'before', speech: 'before', emoji: '⏮️', phonetic: '/bɪˈfɔːr/' }
+    ]
+  },
+  interjections: {
+    id: 'interjections',
+    name: 'とっさの感情を表す言葉（間投詞）',
+    emoji: '💬',
+    description: 'びっくり・喜び・相づちなど とっさの感情を表す言葉（Day21 間投詞より）',
+    words: [
+      { id: 'int_1', japanese: 'すごい！・うわあ！', english: 'Wow!', speech: 'Wow', emoji: '🤩', phonetic: '/waʊ/' },
+      { id: 'int_2', japanese: 'ああ、なるほど', english: 'Oh,', speech: 'Oh', emoji: '😮', phonetic: '/oʊ/' },
+      { id: 'int_3', japanese: '痛っ！（いたい！）', english: 'Ouch!', speech: 'Ouch', emoji: '💥', phonetic: '/aʊtʃ/' },
+      { id: 'int_4', japanese: 'おっと！（しまった）', english: 'Oops!', speech: 'Oops', emoji: '💦', phonetic: '/uːps/' },
+      { id: 'int_5', japanese: 'やったー！', english: 'Yay!', speech: 'Yay', emoji: '🙌', phonetic: '/jeɪ/' },
+      { id: 'int_6', japanese: 'えーと、・まあ、', english: 'Well,', speech: 'Well', emoji: '🤔', phonetic: '/wel/' },
+      { id: 'int_7', japanese: 'えーっと、', english: 'Um,', speech: 'Um', emoji: '💭', phonetic: '/ʌm/' },
+      { id: 'int_8', japanese: 'ねえ！（よびかけ）', english: 'Hey!', speech: 'Hey', emoji: '👋', phonetic: '/heɪ/' }
     ]
   }
 };
 
-/** 現在選択されているメイングループ */
-let currentGroupId = 'pronouns';
+/** 現在選択されているメイングループ（Day11〜12の順番に合わせて名詞から開始） */
+let currentGroupId = 'nouns';
 
 /** 現在選択されているサブグループ（モノ・コトの名前用） */
 let currentSubGroupId = 'nature';
@@ -460,6 +792,24 @@ export function renderWordList(groupId) {
 }
 
 /**
+ * 指定グループIDに「英単語じてん」のタブを切り替えるヘルパー
+ * @param {string} groupId
+ */
+export function switchGroupTab(groupId) {
+  const group = WORD_GROUPS[groupId];
+  if (!group) return;
+
+  currentGroupId = group.id;
+
+  document.querySelectorAll('.group-tab-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.getAttribute('data-group-id') === group.id);
+  });
+
+  renderSubGroupTabs(group);
+  renderWordList(currentGroupId);
+}
+
+/**
  * グループ切替タブのレンダリングと制御
  */
 export function initGroupTabs() {
@@ -481,15 +831,7 @@ export function initGroupTabs() {
     `;
 
     tabBtn.addEventListener('click', () => {
-      currentGroupId = group.id;
-
-      // タブのactive状態を更新
-      document.querySelectorAll('.group-tab-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.getAttribute('data-group-id') === group.id);
-      });
-
-      renderSubGroupTabs(group);
-      renderWordList(currentGroupId);
+      switchGroupTab(group.id);
     });
 
     tabsContainer.appendChild(tabBtn);
@@ -497,6 +839,93 @@ export function initGroupTabs() {
 
   // 初期状態のサブタブ表示制御
   renderSubGroupTabs(WORD_GROUPS[currentGroupId]);
+}
+
+/**
+ * 「ことばの種類（品詞の役割）」リストのレンダリング
+ */
+export function renderWordTypesList() {
+  const container = document.getElementById('wordTypesListContainer');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  WORD_TYPES_GUIDE.forEach((item) => {
+    const card = document.createElement('div');
+    card.className = 'word-type-card';
+    card.setAttribute('role', 'listitem');
+
+    const examplesHtml = item.examples
+      .map(
+        (ex) => `
+          <span class="word-type-example-chip">
+            <span class="word-type-example-en">${ex.en}</span>
+            <span>（${ex.ja}）</span>
+          </span>
+        `
+      )
+      .join('');
+
+    card.innerHTML = `
+      <div class="word-type-card-top">
+        <div class="word-type-title-wrap">
+          <span class="word-type-num-badge" aria-label="${item.number}番">${item.number}</span>
+          <span class="word-type-emoji" aria-hidden="true">${item.emoji}</span>
+          <h4 class="word-type-name">${item.name}</h4>
+        </div>
+        <button
+          type="button"
+          class="word-type-jump-btn"
+          data-jump-group="${item.id}"
+          aria-label="${item.name} の単語を英単語じてんで見る"
+        >
+          <span>📖</span>
+          <span>この種類の単語を見る →</span>
+        </button>
+      </div>
+
+      <div class="word-type-desc">
+        <strong>💡 どんな役割？：</strong>${item.roleSummary}<br />
+        <span>${item.kidExplanation}</span>
+      </div>
+
+      <div class="word-type-examples-row">
+        <span class="word-type-examples-label">📝 たとえば：</span>
+        ${examplesHtml}
+      </div>
+    `;
+
+    const jumpBtn = card.querySelector('.word-type-jump-btn');
+    if (jumpBtn) {
+      jumpBtn.addEventListener('click', () => {
+        const targetGroupId = jumpBtn.getAttribute('data-jump-group');
+        const typesCard = document.getElementById('wordTypesModeCard');
+        const dictCard = document.getElementById('dictModeCard');
+        const typesArea = document.getElementById('wordTypesArea');
+        const dictArea = document.getElementById('dictionaryArea');
+
+        if (typesCard && dictCard && typesArea && dictArea) {
+          typesCard.classList.remove('active');
+          typesCard.setAttribute('aria-expanded', 'false');
+          dictCard.classList.add('active');
+          dictCard.setAttribute('aria-expanded', 'true');
+
+          typesArea.classList.add('hidden');
+          dictArea.classList.remove('hidden');
+        }
+
+        if (targetGroupId) {
+          switchGroupTab(targetGroupId);
+        }
+
+        if (dictArea) {
+          dictArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+
+    container.appendChild(card);
+  });
 }
 
 /**
@@ -538,18 +967,36 @@ export function initModals() {
 }
 
 /**
- * サブゲーム選択（図鑑 / クイズ）のUI連動
+ * サブゲーム選択（ことばの種類 / 英単語じてん / 単語クイズ）のUI連動
  */
 export function initModeSelection() {
+  const typesCard = document.getElementById('wordTypesModeCard');
   const dictCard = document.getElementById('dictModeCard');
+  const typesArea = document.getElementById('wordTypesArea');
   const dictArea = document.getElementById('dictionaryArea');
 
-  if (dictCard && dictArea) {
+  if (typesCard && dictCard && typesArea && dictArea) {
+    typesCard.addEventListener('click', () => {
+      typesCard.classList.add('active');
+      typesCard.setAttribute('aria-expanded', 'true');
+      dictCard.classList.remove('active');
+      dictCard.setAttribute('aria-expanded', 'false');
+
+      typesArea.classList.remove('hidden');
+      dictArea.classList.add('hidden');
+
+      typesArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
     dictCard.addEventListener('click', () => {
       dictCard.classList.add('active');
-      dictArea.classList.remove('hidden');
+      dictCard.setAttribute('aria-expanded', 'true');
+      typesCard.classList.remove('active');
+      typesCard.setAttribute('aria-expanded', 'false');
 
-      // 辞書エリアまでスムーズスクロール
+      dictArea.classList.remove('hidden');
+      typesArea.classList.add('hidden');
+
       dictArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   }
@@ -581,6 +1028,7 @@ export function initWordMatch() {
     };
   }
 
+  renderWordTypesList();
   initGroupTabs();
   renderWordList(currentGroupId);
   initSpeedControl();
